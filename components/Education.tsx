@@ -8,7 +8,7 @@ const education = [
   {
     institution: "Universitas Amikom Yogyakarta",
     degree: "S-1 Sistem Informasi",
-    period: "2022 — Sekarang",
+    period: "2023 — Sekarang",
     status: "Aktif",
     statusColor: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
     description:
@@ -21,6 +21,40 @@ const education = [
     icon: <GraduationCap size={24} className="text-cyan-400" />,
     color: "from-cyan-500/20 to-blue-600/5",
     border: "border-cyan-400/20",
+  },
+  {
+    institution: "SMA Rex Mundi Manado",
+    degree: "Sekolah Menengah Atas (MIPA)",
+    period: "2020 — 2023",
+    status: "Lulus",
+    statusColor: "text-cyan-400 bg-cyan-400/10 border-cyan-400/30",
+    description:
+      "Menyelesaikan pendidikan menengah atas dengan fokus pada Matematika dan Ilmu Pengetahuan Alam. Membangun fondasi akademis yang kuat dan mulai mengenal dasar-dasar logika pemrograman komputer.",
+    highlights: [
+      "Fokus kurikulum: Matematika, Fisika, Kimia, Biologi",
+      "Mengembangkan dasar-dasar logika komputasi",
+      "Aktif dalam kegiatan OSIS dan ekstrakurikuler sekolah",
+    ],
+    icon: <BookOpen size={24} className="text-violet-400" />,
+    color: "from-violet-500/20 to-purple-600/5",
+    border: "border-violet-400/20",
+  },
+  {
+    institution: "SMP Pax Christi Manado",
+    degree: "Sekolah Menengah Pertama",
+    period: "2017 — 2020",
+    status: "Lulus",
+    statusColor: "text-cyan-400 bg-cyan-400/10 border-cyan-400/30",
+    description:
+      "Menempuh pendidikan tingkat menengah pertama dengan fokus pada pengembangan karakter, disiplin belajar, dan pengenalan dasar-dasar teknologi informasi.",
+    highlights: [
+      "Pengenalan dasar komputer, perangkat keras, dan perangkat lunak",
+      "Aktif berpartisipasi dalam organisasi sekolah dan kegiatan sosial",
+      "Membangun landasan kerja sama tim dan komunikasi efektif",
+    ],
+    icon: <Target size={24} className="text-emerald-400" />,
+    color: "from-emerald-500/20 to-teal-600/5",
+    border: "border-emerald-400/20",
   },
 ];
 
@@ -125,46 +159,48 @@ export default function Education() {
             Pendidikan Formal
           </h3>
 
-          {education.map((edu) => (
-            <div
-              key={edu.institution}
-              className="animate-on-scroll glass gradient-border rounded-2xl p-6 md:p-8
-                hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
-            >
-              <div className="flex flex-col md:flex-row gap-6">
-                {/* Icon */}
-                <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${edu.color} border ${edu.border} flex items-center justify-center`}>
-                  {edu.icon}
-                </div>
-
-                <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                    <div>
-                      <h4 className="text-xl font-bold text-white">{edu.institution}</h4>
-                      <p className="text-cyan-400 font-medium">{edu.degree}</p>
-                    </div>
-                    <div className="flex flex-col items-start sm:items-end gap-1">
-                      <span className="font-mono text-sm text-white/40">{edu.period}</span>
-                      <span className={`px-3 py-0.5 rounded-full text-xs font-medium border ${edu.statusColor}`}>
-                        {edu.status}
-                      </span>
-                    </div>
+          <div className="flex flex-col gap-6">
+            {education.map((edu) => (
+              <div
+                key={edu.institution}
+                className="animate-on-scroll glass gradient-border rounded-2xl p-6 md:p-8
+                  hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+              >
+                <div className="flex flex-col md:flex-row gap-6">
+                  {/* Icon */}
+                  <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${edu.color} border ${edu.border} flex items-center justify-center`}>
+                    {edu.icon}
                   </div>
 
-                  <p className="text-white/60 text-sm leading-relaxed mb-4">{edu.description}</p>
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                      <div>
+                        <h4 className="text-xl font-bold text-white">{edu.institution}</h4>
+                        <p className="text-cyan-400 font-medium">{edu.degree}</p>
+                      </div>
+                      <div className="flex flex-col items-start sm:items-end gap-1">
+                        <span className="font-mono text-sm text-white/40">{edu.period}</span>
+                        <span className={`px-3 py-0.5 rounded-full text-xs font-medium border ${edu.statusColor}`}>
+                          {edu.status}
+                        </span>
+                      </div>
+                    </div>
 
-                  <ul className="space-y-2">
-                    {edu.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white/50">
-                        <span className="text-cyan-400 flex-shrink-0 mt-0.5">▹</span>
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
+                    <p className="text-white/60 text-sm leading-relaxed mb-4">{edu.description}</p>
+
+                    <ul className="space-y-2">
+                      {edu.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-white/50">
+                          <span className="text-cyan-400 flex-shrink-0 mt-0.5">▹</span>
+                          {h}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Certifications */}
