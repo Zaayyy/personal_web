@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { GraduationCap, Award, BookOpen, Target, CheckCircle, Clock } from "lucide-react";
+import Image from "next/image";
+import { GraduationCap, Award, BookOpen, Target, CheckCircle, Clock, MapPin } from "lucide-react";
 import { FaAws } from "react-icons/fa";
 
 const education = [
@@ -18,6 +19,8 @@ const education = [
       "Proyek akademik: Data Mining, Pengembangan Aplikasi Web",
       "Aktif dalam organisasi mahasiswa teknologi",
     ],
+    logo: "/logo_amikom2 (1).png",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Universitas+Amikom+Yogyakarta",
     icon: <GraduationCap size={24} className="text-cyan-400" />,
     color: "from-cyan-500/20 to-blue-600/5",
     border: "border-cyan-400/20",
@@ -35,6 +38,8 @@ const education = [
       "Mengembangkan dasar-dasar logika komputasi",
       "Aktif dalam kegiatan OSIS dan ekstrakurikuler sekolah",
     ],
+    logo: "/rex.jpg",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=SMA+Rex+Mundi+Manado",
     icon: <BookOpen size={24} className="text-violet-400" />,
     color: "from-violet-500/20 to-purple-600/5",
     border: "border-violet-400/20",
@@ -52,6 +57,8 @@ const education = [
       "Aktif berpartisipasi dalam organisasi sekolah dan kegiatan sosial",
       "Membangun landasan kerja sama tim dan komunikasi efektif",
     ],
+    logo: "/pax.jpg",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=SMP+Pax+Christi+Manado",
     icon: <Target size={24} className="text-emerald-400" />,
     color: "from-emerald-500/20 to-teal-600/5",
     border: "border-emerald-400/20",
@@ -167,10 +174,22 @@ export default function Education() {
                   hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row gap-6">
-                  {/* Icon */}
-                  <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${edu.color} border ${edu.border} flex items-center justify-center`}>
-                    {edu.icon}
-                  </div>
+                  {/* Logo / Icon */}
+                  {edu.logo ? (
+                    <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white border border-white/10 flex items-center justify-center p-1.5 shadow-[0_0_20px_rgba(255,255,255,0.1)] overflow-hidden">
+                      <Image
+                        src={edu.logo}
+                        alt={edu.institution}
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${edu.color} border ${edu.border} flex items-center justify-center`}>
+                      {edu.icon}
+                    </div>
+                  )}
 
                   <div className="flex-1">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
@@ -188,7 +207,7 @@ export default function Education() {
 
                     <p className="text-white/60 text-sm leading-relaxed mb-4">{edu.description}</p>
 
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 mb-4">
                       {edu.highlights.map((h, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-white/50">
                           <span className="text-cyan-400 flex-shrink-0 mt-0.5">▹</span>
@@ -196,6 +215,23 @@ export default function Education() {
                         </li>
                       ))}
                     </ul>
+
+                    {/* Google Maps Button */}
+                    {edu.mapsUrl && (
+                      <div className="mt-5">
+                        <a
+                          href={edu.mapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold
+                            bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/40 
+                            text-white/60 hover:text-cyan-400 shadow-sm transition-all duration-300 group"
+                        >
+                          <MapPin size={13} className="text-white/40 group-hover:text-cyan-400 transition-colors" />
+                          <span>Lihat Lokasi di Google Maps</span>
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
