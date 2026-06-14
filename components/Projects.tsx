@@ -141,9 +141,9 @@ export default function Projects() {
             <div
               key={project.id}
               id={`project-${project.id}`}
-              className="animate-on-scroll group glass gradient-border rounded-2xl overflow-hidden
+              className="animate-on-scroll reveal-spring-up group glass gradient-border rounded-2xl overflow-hidden
                 hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] hover:-translate-y-1 transition-all duration-400"
-              style={{ animationDelay: `${idx * 0.12}s` }}
+              style={{ transitionDelay: `${idx * 0.12}s` }}
             >
               {/* Card header */}
               <div className={`relative p-6 bg-gradient-to-br ${project.gradient}`}>

@@ -126,10 +126,10 @@ export default function Hobbies() {
             <div
               key={hobby.id}
               id={`hobby-${hobby.id}`}
-              className="animate-on-scroll group glass gradient-border rounded-2xl p-6
+              className="animate-on-scroll reveal-spring-up group glass gradient-border rounded-2xl p-6
                 hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]
                 transition-all duration-300"
-              style={{ animationDelay: `${idx * 0.1}s` }}
+              style={{ transitionDelay: `${idx * 0.1}s` }}
             >
               {/* Header */}
               <div className="flex items-center gap-4 mb-4">

@@ -127,7 +127,7 @@ export default function About() {
         </div>
 
         {/* Bio card */}
-        <div className="w-full max-w-4xl mx-auto glass gradient-border rounded-2xl p-8 mb-16 animate-on-scroll">
+        <div className="w-full max-w-4xl mx-auto glass gradient-border rounded-2xl p-8 mb-16 animate-on-scroll reveal-zoom-in">
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
             {/* Avatar */}
             <div className="flex-shrink-0">
@@ -166,8 +166,8 @@ export default function About() {
           {skillGroups.map((group, gIdx) => (
             <div
               key={group.title}
-              className={`animate-on-scroll glass gradient-border rounded-2xl p-6 transition-all duration-300 ${group.glow}`}
-              style={{ animationDelay: `${gIdx * 0.15}s` }}
+              className={`animate-on-scroll reveal-spring-up glass gradient-border rounded-2xl p-6 transition-all duration-300 ${group.glow}`}
+              style={{ transitionDelay: `${gIdx * 0.15}s` }}
             >
               {/* Group header */}
               <div className="flex items-center gap-3 mb-6">

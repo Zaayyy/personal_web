@@ -73,6 +73,17 @@ const PARTICLES = [
 export default function Hero() {
   const headline = useTypewriter(HEADLINE_TEXTS);
   const heroRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+      setMousePos({ x, y });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const scrollToAbout = () => {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -84,22 +95,52 @@ export default function Hero() {
       ref={heroRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Animated background */}
-      <div className="absolute inset-0 bg-[#020205]">
-        <div className="absolute inset-0 bg-hero-gradient" />
+      {/* Animated background with 3D Parallax & Shooting Stars */}
+      <div className="absolute inset-0 bg-[#020205] overflow-hidden">
+        {/* Parallax Starfield & Gradient Layer */}
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            transform: `translate(${mousePos.x * 25}px, ${mousePos.y * 25}px)`, 
+            transition: "transform 0.15s ease-out" 
+          }}
+        >
+          <div className="absolute inset-0 bg-hero-gradient" />
+          <div className="stars-small absolute inset-0" />
+          <div className="stars-medium absolute inset-0" />
+          <div className="stars-large absolute inset-0" />
+        </div>
         
-        {/* Twinkling starfield layers */}
-        <div className="stars-small absolute inset-0" />
-        <div className="stars-medium absolute inset-0" />
-        <div className="stars-large absolute inset-0" />
+        {/* Parallax Grid Pattern Layer */}
+        <div 
+          className="absolute inset-0 cockpit-grid opacity-[0.25]"
+          style={{ 
+            transform: `translate(${mousePos.x * 12}px, ${mousePos.y * 12}px)`, 
+            transition: "transform 0.12s ease-out" 
+          }}
+        />
         
-        {/* Cockpit HUD grid pattern */}
-        <div className="absolute inset-0 cockpit-grid opacity-[0.3]" />
-        
-        {/* Nebula glows */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/15 rounded-full blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px]" />
+        {/* Parallax Nebula Glows Layer */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{ 
+            transform: `translate(${mousePos.x * -50}px, ${mousePos.y * -50}px)`, 
+            transition: "transform 0.2s ease-out" 
+          }}
+        >
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/15 rounded-full blur-[100px] animate-pulse-slow" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: "2s" }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px]" />
+        </div>
+
+        {/* Shooting Stars / Meteors */}
+        <div className="meteors-container">
+          <div className="meteor" style={{ top: "5%", right: "15%", animationDuration: "7s", animationDelay: "0.2s" }} />
+          <div className="meteor" style={{ top: "18%", right: "30%", animationDuration: "10s", animationDelay: "3.5s" }} />
+          <div className="meteor" style={{ top: "32%", right: "8%", animationDuration: "6s", animationDelay: "1.8s" }} />
+          <div className="meteor" style={{ top: "45%", right: "25%", animationDuration: "9s", animationDelay: "5.2s" }} />
+          <div className="meteor" style={{ top: "12%", right: "45%", animationDuration: "8s", animationDelay: "0s" }} />
+        </div>
       </div>
 
       {/* Floating particles */}

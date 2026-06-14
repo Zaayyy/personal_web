@@ -115,7 +115,7 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left: Contact info */}
-          <div className="lg:col-span-2 animate-on-scroll">
+          <div className="lg:col-span-2 animate-on-scroll reveal-slide-left">
             <div className="space-y-4 mb-8">
               <div className="flex items-center gap-3 text-white/50">
                 <MapPin size={16} className="text-cyan-400 flex-shrink-0" />
@@ -155,7 +155,7 @@ export default function Contact() {
           </div>
 
           {/* Right: Contact form */}
-          <div className="lg:col-span-3 animate-on-scroll" style={{ animationDelay: "0.2s" }}>
+          <div className="lg:col-span-3 animate-on-scroll reveal-slide-right" style={{ transitionDelay: "0.15s" }}>
             <div className="glass gradient-border rounded-2xl p-8">
               <h3 className="font-semibold text-white text-lg mb-6">Kirim Pesan</h3>
 

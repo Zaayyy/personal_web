@@ -167,11 +167,11 @@ export default function Education() {
           </h3>
 
           <div className="flex flex-col gap-6">
-            {education.map((edu) => (
+            {education.map((edu, idx) => (
               <div
                 key={edu.institution}
-                className="animate-on-scroll glass gradient-border rounded-2xl p-6 md:p-8
-                  hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+                className={`animate-on-scroll ${idx % 2 === 0 ? "reveal-slide-left" : "reveal-slide-right"} glass gradient-border rounded-2xl p-6 md:p-8
+                  hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-300`}
               >
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Logo / Icon */}
@@ -251,10 +251,10 @@ export default function Education() {
               <div
                 key={cert.id}
                 id={`cert-${cert.id}`}
-                className="cert-progress-bar animate-on-scroll glass gradient-border rounded-2xl p-6
+                className="cert-progress-bar animate-on-scroll reveal-spring-up glass gradient-border rounded-2xl p-6
                   hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]
                   transition-all duration-300"
-                style={{ animationDelay: `${idx * 0.15}s` }}
+                style={{ transitionDelay: `${idx * 0.15}s` }}
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
