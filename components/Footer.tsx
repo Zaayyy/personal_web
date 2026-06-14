@@ -23,12 +23,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
           <div className="text-center md:text-left">
-            <p className="font-mono text-cyan-400 text-lg font-semibold">
-              <span className="text-violet-400">&lt;</span>
-              MAS
-              <span className="text-violet-400"> /&gt;</span>
-            </p>
-            <p className="text-white/30 text-xs mt-1">Marcellinus Alfrits Sorongan</p>
+            <p className="text-white/40 font-mono text-sm font-semibold">Marcellinus Alfrits Sorongan</p>
           </div>
 
           {/* Social links */}

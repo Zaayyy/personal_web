@@ -49,16 +49,7 @@ export default function Navbar() {
       }`}
     >
       <div className="w-full max-w-6xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <a
-          href="#hero"
-          onClick={(e) => { e.preventDefault(); handleNavClick("#hero"); }}
-          className="font-mono text-cyan-400 text-lg font-semibold tracking-wider hover:text-cyan-300 transition-colors"
-        >
-          <span className="text-violet-400">&lt;</span>
-          MAS
-          <span className="text-violet-400"> /&gt;</span>
-        </a>
+
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-8">
@@ -99,7 +90,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           id="mobile-menu-toggle"
-          className="md:hidden text-white/70 hover:text-white transition-colors"
+          className="ml-auto md:hidden text-white/70 hover:text-white transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
