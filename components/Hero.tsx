@@ -127,14 +127,14 @@ export default function Hero() {
         </div>
 
         {/* Name */}
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 animate-fade-in-up" style={{ animationDelay: "0.1s", opacity: 0 }}>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 md:mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s", opacity: 0 }}>
           <span className="text-white">Marcellinus</span>
           <br />
           <span className="gradient-text">Alfrits Sorongan</span>
         </h1>
 
         {/* Typewriter headline */}
-        <div className="h-10 flex items-center justify-center mb-6 animate-fade-in-up" style={{ animationDelay: "0.3s", opacity: 0 }}>
+        <div className="h-12 flex items-center justify-center mb-8 md:mb-10 animate-fade-in-up" style={{ animationDelay: "0.3s", opacity: 0 }}>
           <p className="text-xl md:text-2xl text-white/70 font-light">
             <span className="text-cyan-400 font-mono">&gt;</span>{" "}
             <span className="typing-cursor">{headline}</span>
@@ -142,17 +142,17 @@ export default function Hero() {
         </div>
 
         {/* Bio */}
-        <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.5s", opacity: 0 }}>
+        <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto mb-12 md:mb-16 leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.5s", opacity: 0 }}>
           Membangun solusi digital yang bermakna — dari web development penuh-tumpukan hingga analitik data dan keamanan cloud. Setiap baris kode adalah langkah menuju dampak nyata.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: "0.7s", opacity: 0 }}>
+        <div className="flex flex-wrap items-center justify-center gap-6 animate-fade-in-up mb-12" style={{ animationDelay: "0.7s", opacity: 0 }}>
           <a
             id="download-resume-btn"
             href="/resume-placeholder.pdf"
             download
-            className="btn-neon flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
+            className="btn-neon flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm md:text-base
               bg-gradient-to-r from-cyan-500 to-violet-600 text-white
               hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] hover:scale-105
               transition-all duration-300"
@@ -166,7 +166,7 @@ export default function Hero() {
             href="https://github.com/Zaayyy"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-neon flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
+            className="btn-neon flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm md:text-base
               glass border border-white/10 text-white/80
               hover:border-cyan-400/50 hover:text-white hover:shadow-[0_0_20px_rgba(0,212,255,0.15)]
               hover:scale-105 transition-all duration-300"
@@ -180,7 +180,7 @@ export default function Hero() {
             href="https://www.linkedin.com/in/marcell-sorongan-36070a299"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-neon flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
+            className="btn-neon flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm md:text-base
               glass border border-white/10 text-white/80
               hover:border-violet-400/50 hover:text-white hover:shadow-[0_0_20px_rgba(124,58,237,0.15)]
               hover:scale-105 transition-all duration-300"
@@ -194,7 +194,7 @@ export default function Hero() {
             href="https://www.instagram.com/aceeeelllllll"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-neon flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
+            className="btn-neon flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm md:text-base
               glass border border-white/10 text-white/80
               hover:border-pink-400/50 hover:text-white hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]
               hover:scale-105 transition-all duration-300"
@@ -207,7 +207,7 @@ export default function Hero() {
         {/* Scroll indicator */}
         <button
           onClick={scrollToAbout}
-          className="mt-16 flex flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors group"
+          className="mx-auto mt-20 flex flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors group"
         >
           <span className="text-xs font-mono tracking-widest">SCROLL</span>
           <ChevronDown size={20} className="animate-bounce group-hover:text-cyan-400 transition-colors" />

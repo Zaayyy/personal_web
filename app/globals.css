@@ -67,6 +67,11 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 212, 255, 0.3) rgba(255, 255, 255, 0.05);
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
 }
 
 html::-webkit-scrollbar {
@@ -94,6 +99,10 @@ body {
     rgb(var(--background-end-rgb))
   );
   min-height: 100vh;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
   font-family: var(--font-inter), system-ui, sans-serif;
   overflow-x: hidden;
 }
