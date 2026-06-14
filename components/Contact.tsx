@@ -94,12 +94,12 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-24 pb-32 overflow-hidden">
+    <section id="contact" className="relative py-24 pb-32 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-16 animate-on-scroll">
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// KONTAK</p>

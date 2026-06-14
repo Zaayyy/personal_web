@@ -101,12 +101,12 @@ export default function Hobbies() {
   }, []);
 
   return (
-    <section id="hobbies" className="relative py-24 overflow-hidden">
+    <section id="hobbies" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-16 animate-on-scroll">
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// HOBI & MINAT</p>

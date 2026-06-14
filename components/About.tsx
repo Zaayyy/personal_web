@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   SiJavascript, SiTypescript, SiPython, SiReact, SiNextdotjs,
   SiTailwindcss, SiGit, SiMysql, SiPostgresql
@@ -106,12 +107,12 @@ export default function About() {
   useScrollReveal();
 
   return (
-    <section id="about" className="relative py-24 overflow-hidden">
+    <section id="about" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-violet-600/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-pink-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-16 animate-on-scroll">
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// TENTANG SAYA</p>
@@ -126,12 +127,19 @@ export default function About() {
         </div>
 
         {/* Bio card */}
-        <div className="glass gradient-border rounded-2xl p-8 mb-16 animate-on-scroll max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            {/* Avatar placeholder */}
+        <div className="w-full max-w-4xl mx-auto glass gradient-border rounded-2xl p-8 mb-16 animate-on-scroll">
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            {/* Avatar */}
             <div className="flex-shrink-0">
-              <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/30 to-violet-600/30 border border-white/10 flex items-center justify-center">
-                <span className="text-3xl font-bold gradient-text">MA</span>
+              <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-violet-500/30 shadow-[0_0_20px_rgba(139,92,246,0.3)] relative group transition-transform duration-300 hover:scale-105">
+                <Image
+                  src="/Profile pic.jpeg"
+                  alt="Marcellinus Alfrits Sorongan"
+                  fill
+                  sizes="112px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority
+                />
               </div>
             </div>
             <div>

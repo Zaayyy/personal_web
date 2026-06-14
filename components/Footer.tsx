@@ -15,11 +15,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/5 py-10 overflow-hidden">
+    <footer className="relative border-t border-white/5 py-10 overflow-hidden w-full flex flex-col items-center">
       {/* Subtle gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#050a15] to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#020205] to-transparent pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto px-6">
+      <div className="relative w-full max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
           <div className="text-center md:text-left">

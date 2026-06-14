@@ -99,12 +99,12 @@ export default function Education() {
   }, []);
 
   return (
-    <section id="education" className="relative py-24 overflow-hidden">
+    <section id="education" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-violet-600/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-pink-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-16 animate-on-scroll">
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// PENDIDIKAN</p>

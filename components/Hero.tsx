@@ -40,12 +40,19 @@ function useTypewriter(texts: string[], speed = 80, pause = 2000) {
 }
 
 // Floating particle component
-function Particle({ style }: { style: React.CSSProperties }) {
+const PARTICLE_COLORS = [
+  "radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 70%)", // pink glow
+  "radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)", // violet glow
+  "radial-gradient(circle, rgba(0, 212, 255, 0.4) 0%, transparent 70%)", // cyan glow
+  "radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%)", // star white
+];
+
+function Particle({ style, colorIdx }: { style: React.CSSProperties; colorIdx: number }) {
   return (
     <div
       className="absolute rounded-full pointer-events-none"
       style={{
-        background: "radial-gradient(circle, rgba(0,212,255,0.6), transparent)",
+        background: PARTICLE_COLORS[colorIdx % PARTICLE_COLORS.length],
         ...style,
       }}
     />
@@ -78,30 +85,31 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Animated background */}
-      <div className="absolute inset-0 bg-[#050a15]">
+      <div className="absolute inset-0 bg-[#020205]">
         <div className="absolute inset-0 bg-hero-gradient" />
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-        {/* Glow orbs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-900/5 rounded-full blur-3xl" />
+        
+        {/* Twinkling starfield layers */}
+        <div className="stars-small absolute inset-0" />
+        <div className="stars-medium absolute inset-0" />
+        <div className="stars-large absolute inset-0" />
+        
+        {/* Cockpit HUD grid pattern */}
+        <div className="absolute inset-0 cockpit-grid opacity-[0.3]" />
+        
+        {/* Nebula glows */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/15 rounded-full blur-[100px] animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px]" />
       </div>
 
       {/* Floating particles */}
       {PARTICLES.map((p, i) => (
         <Particle
           key={i}
+          colorIdx={i}
           style={{
-            width: p.width,
-            height: p.height,
+            width: p.width * 2,
+            height: p.height * 2,
             top: p.top,
             left: p.left,
             animation: `float ${p.animationDuration} ease-in-out infinite`,
@@ -111,7 +119,7 @@ export default function Hero() {
       ))}
 
       {/* Main content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-cyan-400/20 text-cyan-400 text-sm font-mono mb-8 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
