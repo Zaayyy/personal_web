@@ -592,3 +592,56 @@ body {
   transform: translateY(-1px);
 }
 
+/* ── Scroll progress bar at top of page ── */
+@property --scroll-progress {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--scroll-progress, 0%);
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff, #7c3aed, #ec4899);
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+  transition: width 0.1s linear;
+}
+
+/* ── Filter button active pulse ── */
+@keyframes filter-active-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+  50%       { box-shadow: 0 0 30px rgba(0, 212, 255, 0.5), 0 0 60px rgba(139, 92, 246, 0.3); }
+}
+
+/* ── Selection color ── */
+::selection {
+  background: rgba(0, 212, 255, 0.25);
+  color: white;
+}
+
+/* ── Focus visible ring ── */
+:focus-visible {
+  outline: 2px solid rgba(0, 212, 255, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Improved card transition ── */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Glowing neon divider ── */
+.neon-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.3) 40%, rgba(139, 92, 246, 0.3) 60%, transparent 100%);
+  width: 100%;
+}

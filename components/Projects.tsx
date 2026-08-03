@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ExternalLink, Layers, Database, Brain, Globe } from "lucide-react";
 import { FiGithub } from "react-icons/fi";
 
@@ -27,6 +27,7 @@ const projects = [
     tagColor: "bg-cyan-500/10 text-cyan-300 border-cyan-500/20",
     github: "https://github.com/Zaayyy",
     demo: null,
+    category: "web",
   },
   {
     id: "data-mining",
@@ -50,6 +51,7 @@ const projects = [
     tagColor: "bg-violet-500/10 text-violet-300 border-violet-500/20",
     github: "https://github.com/Zaayyy",
     demo: null,
+    category: "data",
   },
   {
     id: "web-security",
@@ -73,6 +75,7 @@ const projects = [
     tagColor: "bg-amber-500/10 text-amber-300 border-amber-500/20",
     github: "https://github.com/Zaayyy",
     demo: null,
+    category: "security",
   },
   {
     id: "db-management",
@@ -96,10 +99,20 @@ const projects = [
     tagColor: "bg-blue-500/10 text-blue-300 border-blue-500/20",
     github: "https://github.com/Zaayyy",
     demo: null,
+    category: "web",
   },
 ];
 
+const CATEGORIES = [
+  { id: "all", label: "All Projects" },
+  { id: "web", label: "Web Dev" },
+  { id: "data", label: "Data Science" },
+  { id: "security", label: "Security" },
+];
+
 export default function Projects() {
+  const [activeCategory, setActiveCategory] = useState("all");
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -114,6 +127,10 @@ export default function Projects() {
     document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+
+  const filtered = activeCategory === "all"
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
 
   return (
     <section id="projects" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
@@ -135,9 +152,27 @@ export default function Projects() {
           </p>
         </div>
 
+        {/* Category filter tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-10 animate-on-scroll">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              id={`filter-${cat.id}`}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeCategory === cat.id
+                  ? "bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-[0_0_20px_rgba(0,212,255,0.3)]"
+                  : "glass border border-white/10 text-white/50 hover:text-white hover:border-white/25"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
         {/* Projects grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {projects.map((project, idx) => (
+          {filtered.map((project, idx) => (
             <div
               key={project.id}
               id={`project-${project.id}`}

@@ -49,6 +49,19 @@ export default function Navbar() {
       }`}
     >
       <div className="w-full max-w-6xl mx-auto px-6 flex items-center justify-between">
+        {/* Logo / Brand */}
+        <a
+          href="#hero"
+          onClick={(e) => { e.preventDefault(); handleNavClick("#hero"); }}
+          className="flex items-center gap-2.5 group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shadow-[0_0_15px_rgba(0,212,255,0.3)] group-hover:shadow-[0_0_25px_rgba(0,212,255,0.5)] transition-shadow duration-300">
+            M
+          </div>
+          <span className="hidden sm:block text-sm font-semibold text-white/70 group-hover:text-white transition-colors duration-300 font-mono">
+            marcell<span className="text-cyan-400">.dev</span>
+          </span>
+        </a>
 
 
         {/* Desktop nav */}

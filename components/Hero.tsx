@@ -389,9 +389,9 @@ export default function Hero() {
             className="text-white/50 text-sm md:text-base max-w-xl leading-relaxed mb-8 animate-fade-in-up"
             style={{ animationDelay: "0.4s", opacity: 0 }}
           >
-            Membangun solusi digital yang bermakna — dari web development penuh-tumpukan
-            hingga analitik data dan keamanan cloud. Setiap baris kode adalah langkah
-            menuju dampak nyata.
+            Building meaningful digital solutions — from full-stack web
+            development to data analytics and cloud security. Every line of
+            code is a step toward real impact.
           </p>
 
           {/* Stats */}
@@ -424,7 +424,19 @@ export default function Hero() {
                 transition-all duration-300"
             >
               <Download size={16} />
-              Unduh Resume
+              Download Resume
+            </a>
+
+            <a
+              id="view-projects-btn"
+              href="#projects"
+              onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }}
+              className="flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
+                glass border border-white/15 text-white/70
+                hover:border-cyan-400/40 hover:text-white hover:shadow-[0_0_20px_rgba(0,212,255,0.15)]
+                transition-all duration-300"
+            >
+              View Projects
             </a>
 
             <div className="flex items-center gap-3">
