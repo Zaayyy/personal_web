@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ExternalLink, Layers, Database, Brain, Globe } from "lucide-react";
+import { ExternalLink, Layers, Database, Brain, Globe, MessageSquare } from "lucide-react";
 import { FiGithub } from "react-icons/fi";
 
 const projects = [
@@ -101,12 +101,36 @@ const projects = [
     demo: null,
     category: "web",
   },
+  {
+    id: "nlp-chatbot",
+    title: "Customer Support Chatbot",
+    subtitle: "NLP & AI Engineering",
+    emoji: "🤖",
+    status: "Completed",
+    statusColor: "text-pink-400 bg-pink-400/10 border-pink-400/30",
+    description:
+      "Chatbot layanan pelanggan berbasis NLP menggunakan model Transformer untuk memahami intent pengguna dan memberikan respons otomatis yang kontekstual dengan akurasi tinggi.",
+    details: [
+      "Fine-tuning model BERT/IndoBERT untuk klasifikasi intent bahasa Indonesia",
+      "Pipeline preprocessing teks: tokenisasi, normalisasi, dan entity extraction",
+      "REST API dengan FastAPI untuk integrasi ke berbagai platform chat",
+      "Evaluasi performa dengan F1-score 89% pada dataset domain spesifik",
+    ],
+    techStack: ["Python", "FastAPI", "Hugging Face", "BERT", "PyTorch", "PostgreSQL"],
+    icon: <MessageSquare size={24} className="text-pink-400" />,
+    gradient: "from-pink-500/20 via-rose-600/10 to-transparent",
+    border: "border-pink-400/20",
+    tagColor: "bg-pink-500/10 text-pink-300 border-pink-500/20",
+    github: "https://github.com/Zaayyy",
+    demo: null,
+    category: "data",
+  },
 ];
 
 const CATEGORIES = [
   { id: "all", label: "All Projects" },
   { id: "web", label: "Web Dev" },
-  { id: "data", label: "Data Science" },
+  { id: "data", label: "Data / AI" },
   { id: "security", label: "Security" },
 ];
 

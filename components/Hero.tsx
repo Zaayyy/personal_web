@@ -400,13 +400,13 @@ export default function Hero() {
             className="flex items-center gap-8 mb-10 animate-fade-in-up"
             style={{ animationDelay: "0.55s", opacity: 0 }}
           >
-            <StatCard value={10}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
+            <StatCard value={12}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={3}   suffix=""   label="Certif."     color="text-violet-400" triggered={statsVisible} />
+            <StatCard value={5}   suffix=""   label="Certif."     color="text-violet-400" triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={85}  suffix="%"  label="JS Mastery"  color="text-pink-400"   triggered={statsVisible} />
+            <StatCard value={90}  suffix="%"  label="JS Mastery"  color="text-pink-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={2}   suffix="yr" label="Experience"  color="text-emerald-400" triggered={statsVisible} />
+            <StatCard value={3}   suffix="yr" label="Experience"  color="text-emerald-400" triggered={statsVisible} />
           </div>
 
           {/* CTA Buttons */}
@@ -468,7 +468,7 @@ export default function Hero() {
             className="flex flex-wrap gap-2 animate-fade-in-up"
             style={{ animationDelay: "0.85s", opacity: 0 }}
           >
-            {["Next.js", "TypeScript", "Python", "AWS", "NLP", "PostgreSQL"].map((tag) => (
+            {["Next.js", "TypeScript", "Python", "AWS", "NLP", "PostgreSQL", "MySQL", "Security"].map((tag) => (
               <span
                 key={tag}
                 className="px-3 py-1 rounded-full text-[11px] font-mono glass border border-white/8 text-white/50 hover:border-cyan-400/30 hover:text-cyan-400/80 transition-all duration-300 cursor-default"
