@@ -69,11 +69,11 @@ const TERMINAL_LINES = [
   { text: "$ whoami", color: "text-cyan-400", delay: 0 },
   { text: "  marcellinus_alfrits_sorongan", color: "text-white/80", delay: 600 },
   { text: "$ cat skills.json", color: "text-cyan-400", delay: 1200 },
-  { text: '  ["Next.js", "Python", "AWS", "NLP"]', color: "text-emerald-400", delay: 1800 },
-  { text: "$ git status", color: "text-cyan-400", delay: 2600 },
-  { text: "  On branch: main ✓ ready to deploy", color: "text-violet-400", delay: 3200 },
-  { text: "$ npm run build", color: "text-cyan-400", delay: 4200 },
-  { text: "  ✓ compiled successfully", color: "text-green-400", delay: 5000 },
+  { text: '  ["Next.js", "Python", "AWS", "NLP", "TypeScript"]', color: "text-emerald-400", delay: 1800 },
+  { text: "$ python train_model.py --epochs 50", color: "text-cyan-400", delay: 2500 },
+  { text: "  ✓ accuracy: 94.2% · loss: 0.031", color: "text-yellow-300", delay: 3100 },
+  { text: "$ git push origin main", color: "text-cyan-400", delay: 4000 },
+  { text: "  ✓ deployed to production 🚀", color: "text-green-400", delay: 4800 },
 ];
 
 /* ─────────────── Orbit icons ─────────────── */
@@ -389,9 +389,9 @@ export default function Hero() {
             className="text-white/50 text-sm md:text-base max-w-xl leading-relaxed mb-8 animate-fade-in-up"
             style={{ animationDelay: "0.4s", opacity: 0 }}
           >
-            Building meaningful digital solutions — from full-stack web
-            development to data analytics and cloud security. Every line of
-            code is a step toward real impact.
+            Crafting meaningful digital experiences — from full-stack web apps
+            and NLP models to cloud infrastructure and cybersecurity. Passionate
+            about turning complex problems into elegant, impactful solutions.
           </p>
 
           {/* Stats */}
@@ -400,11 +400,11 @@ export default function Hero() {
             className="flex items-center gap-8 mb-10 animate-fade-in-up"
             style={{ animationDelay: "0.55s", opacity: 0 }}
           >
-            <StatCard value={12}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
+            <StatCard value={15}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={5}   suffix=""   label="Certif."     color="text-violet-400" triggered={statsVisible} />
+            <StatCard value={8}   suffix="+"   label="Certif."     color="text-violet-400" triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={90}  suffix="%"  label="JS Mastery"  color="text-pink-400"   triggered={statsVisible} />
+            <StatCard value={94}  suffix="%"  label="Dedication"  color="text-pink-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
             <StatCard value={3}   suffix="yr" label="Experience"  color="text-emerald-400" triggered={statsVisible} />
           </div>
