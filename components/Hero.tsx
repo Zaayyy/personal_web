@@ -306,6 +306,10 @@ export default function Hero() {
             transition: "transform 0.18s ease-out",
           }}
         >
+          {/* Aurora blobs — slow organic movement */}
+          <div className="aurora-blob aurora-blob-1" />
+          <div className="aurora-blob aurora-blob-2" />
+          <div className="aurora-blob aurora-blob-3" />
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-violet-600/12 rounded-full blur-[120px] animate-pulse-slow" />
           <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-pink-500/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: "2s" }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-cyan-600/5 rounded-full blur-[140px]" />
@@ -356,7 +360,7 @@ export default function Hero() {
           {/* Status badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-cyan-400/25 text-cyan-400 text-xs font-mono mb-7 animate-fade-in">
             <span className="relative flex w-2 h-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+              <span className="neon-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex rounded-full w-2 h-2 bg-cyan-400" />
             </span>
             Available for Opportunities · Yogyakarta, ID
@@ -499,7 +503,7 @@ export default function Hero() {
             </div>
 
             {/* Avatar circle */}
-            <div className="relative w-full h-full rounded-full overflow-hidden
+            <div className="avatar-shimmer relative w-full h-full rounded-full overflow-hidden
               border-2 border-white/20
               shadow-[0_0_0_4px_rgba(0,212,255,0.1),0_0_40px_rgba(139,92,246,0.4),0_0_80px_rgba(0,212,255,0.15)]
               group cursor-default"

@@ -21,6 +21,8 @@
   --animate-shimmer: shimmer 2.5s linear infinite;
   --animate-gradient-shift: gradientShift 8s ease-in-out infinite;
   --animate-blink: blink 1s step-end infinite;
+  --animate-aurora: aurora 12s ease-in-out infinite;
+  --animate-border-spin: borderSpin 4s linear infinite;
 
   @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(30px); }
@@ -45,6 +47,17 @@
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+  }
+  @keyframes aurora {
+    0%   { transform: translate(0%, 0%) scale(1);    opacity: 0.6; }
+    25%  { transform: translate(3%, -4%) scale(1.05); opacity: 0.8; }
+    50%  { transform: translate(-2%, 5%) scale(0.97); opacity: 0.5; }
+    75%  { transform: translate(4%, 2%) scale(1.03);  opacity: 0.7; }
+    100% { transform: translate(0%, 0%) scale(1);    opacity: 0.6; }
+  }
+  @keyframes borderSpin {
+    from { --border-angle: 0deg; }
+    to   { --border-angle: 360deg; }
   }
 
   /* Custom shadows */
@@ -110,10 +123,38 @@ body {
 /* Hero background gradient */
 .bg-hero-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(219, 39, 119, 0.05) 0%, transparent 70%);
+    radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(59, 130, 246, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(219, 39, 119, 0.07) 0%, transparent 70%);
+}
+
+/* Aurora blob animations */
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: aurora 12s ease-in-out infinite;
+}
+.aurora-blob-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, transparent 70%);
+  top: 5%; left: 10%;
+  animation-delay: 0s;
+}
+.aurora-blob-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+  top: 50%; right: 5%;
+  animation-delay: -4s;
+}
+.aurora-blob-3 {
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.10) 0%, transparent 70%);
+  bottom: 5%; left: 40%;
+  animation-delay: -8s;
 }
 
 /* Glass card effect */
@@ -644,4 +685,94 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.3) 40%, rgba(139, 92, 246, 0.3) 60%, transparent 100%);
   width: 100%;
+}
+
+/* ── Animated gradient border (conic) for project cards ── */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes borderSpin {
+  from { --border-angle: 0deg; }
+  to   { --border-angle: 360deg; }
+}
+
+.animated-border {
+  position: relative;
+}
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-angle),
+    rgba(0,212,255,0)    0deg,
+    rgba(0,212,255,0.6)  60deg,
+    rgba(139,92,246,0.6) 120deg,
+    rgba(236,72,153,0.4) 180deg,
+    rgba(0,212,255,0)    240deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+  animation: borderSpin 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.animated-border:hover::before {
+  opacity: 1;
+}
+
+/* ── Deep card glow on hover ── */
+.card-glow-hover {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+}
+.card-glow-hover:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(0,212,255,0.15),
+    0 0 40px rgba(0,212,255,0.08),
+    0 0 80px rgba(139,92,246,0.06);
+}
+
+/* ── Avatar shimmer sweep on hover ── */
+@keyframes shimmerSweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+.avatar-shimmer {
+  overflow: hidden;
+}
+.avatar-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.12) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+}
+.avatar-shimmer:hover::after {
+  animation: shimmerSweep 0.7s ease-out;
+}
+
+/* ── Neon ping badge ── */
+.neon-ping {
+  animation: neonPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes neonPing {
+  0%      { transform: scale(1);   opacity: 0.75; }
+  75%,100%{ transform: scale(2.4); opacity: 0; }
 }
