@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "#hero", label: "Beranda" },
-  { href: "#about", label: "Tentang" },
-  { href: "#projects", label: "Proyek" },
-  { href: "#education", label: "Pendidikan" },
-  { href: "#hobbies", label: "Hobi" },
-  { href: "#contact", label: "Kontak" },
+  { href: "#hero", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#education", label: "Education" },
+  { href: "#hobbies", label: "Hobbies" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -97,7 +97,7 @@ export default function Navbar() {
             text-cyan-400 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(0,212,255,0.2)]
             transition-all duration-300"
         >
-          Hubungi Saya
+          Contact Me
         </a>
 
         {/* Mobile hamburger */}
