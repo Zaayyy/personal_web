@@ -14,9 +14,10 @@ import { Shield, Database } from "lucide-react";
 
 /* ─────────────── Typewriter ─────────────── */
 const HEADLINE_TEXTS = [
-  "Web Developer & Data Enthusiast",
+  "Full-Stack Web Developer",
+  "Data & NLP Engineer",
+  "Cloud & Security Enthusiast",
   "IT Student @ Amikom Yogyakarta",
-  "Cloud & Security Learner",
   "Builder of Digital Experiences",
 ];
 
@@ -69,10 +70,10 @@ const TERMINAL_LINES = [
   { text: "$ whoami", color: "text-cyan-400", delay: 0 },
   { text: "  marcellinus_alfrits_sorongan", color: "text-white/80", delay: 600 },
   { text: "$ cat skills.json", color: "text-cyan-400", delay: 1200 },
-  { text: '  ["Next.js", "Python", "AWS", "NLP", "TypeScript"]', color: "text-emerald-400", delay: 1800 },
-  { text: "$ python train_model.py --epochs 50", color: "text-cyan-400", delay: 2500 },
-  { text: "  ✓ accuracy: 94.2% · loss: 0.031", color: "text-yellow-300", delay: 3100 },
-  { text: "$ git push origin main", color: "text-cyan-400", delay: 4000 },
+  { text: '  ["Next.js", "Python", "AWS", "NLP", "Security"]', color: "text-emerald-400", delay: 1800 },
+  { text: "$ python train_model.py --epochs 100", color: "text-cyan-400", delay: 2500 },
+  { text: "  ✓ accuracy: 96.8% · loss: 0.018 · f1: 0.94", color: "text-yellow-300", delay: 3100 },
+  { text: "$ git commit -m 'feat: ship something great'", color: "text-cyan-400", delay: 4000 },
   { text: "  ✓ deployed to production 🚀", color: "text-green-400", delay: 4800 },
 ];
 
@@ -394,8 +395,9 @@ export default function Hero() {
             style={{ animationDelay: "0.4s", opacity: 0 }}
           >
             Crafting meaningful digital experiences — from full-stack web apps
-            and NLP models to cloud infrastructure and cybersecurity. Passionate
-            about turning complex problems into elegant, impactful solutions.
+            and NLP pipelines to cloud infrastructure and cybersecurity.
+            Passionate about turning complex problems into elegant, scalable,
+            and impactful solutions.
           </p>
 
           {/* Stats */}
@@ -404,11 +406,11 @@ export default function Hero() {
             className="flex items-center gap-8 mb-10 animate-fade-in-up"
             style={{ animationDelay: "0.55s", opacity: 0 }}
           >
-            <StatCard value={15}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
+            <StatCard value={18}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={8}   suffix="+"   label="Certif."     color="text-violet-400" triggered={statsVisible} />
+            <StatCard value={10}  suffix="+"  label="Certif."     color="text-violet-400" triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
-            <StatCard value={94}  suffix="%"  label="Dedication"  color="text-pink-400"   triggered={statsVisible} />
+            <StatCard value={97}  suffix="%"  label="Dedication"  color="text-pink-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
             <StatCard value={3}   suffix="yr" label="Experience"  color="text-emerald-400" triggered={statsVisible} />
           </div>
@@ -472,7 +474,7 @@ export default function Hero() {
             className="flex flex-wrap gap-2 animate-fade-in-up"
             style={{ animationDelay: "0.85s", opacity: 0 }}
           >
-            {["Next.js", "TypeScript", "Python", "AWS", "NLP", "PostgreSQL", "MySQL", "Security"].map((tag) => (
+            {["Next.js", "TypeScript", "Python", "AWS", "NLP", "PostgreSQL", "MySQL", "OWASP", "Security"].map((tag) => (
               <span
                 key={tag}
                 className="px-3 py-1 rounded-full text-[11px] font-mono glass border border-white/8 text-white/50 hover:border-cyan-400/30 hover:text-cyan-400/80 transition-all duration-300 cursor-default"

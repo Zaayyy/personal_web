@@ -17,12 +17,12 @@ const skillGroups = [
     border: "border-cyan-400/20",
     glow: "hover:shadow-[0_0_20px_rgba(0,212,255,0.15)]",
     skills: [
-      { name: "JavaScript", icon: <SiJavascript className="text-yellow-400" />, level: 85 },
-      { name: "TypeScript", icon: <SiTypescript className="text-blue-400" />, level: 75 },
-      { name: "React.js", icon: <SiReact className="text-cyan-400" />, level: 80 },
-      { name: "Next.js", icon: <SiNextdotjs className="text-white" />, level: 75 },
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-cyan-300" />, level: 85 },
-      { name: "Python", icon: <SiPython className="text-yellow-300" />, level: 78 },
+      { name: "JavaScript", icon: <SiJavascript className="text-yellow-400" />, level: 87 },
+      { name: "TypeScript", icon: <SiTypescript className="text-blue-400" />, level: 78 },
+      { name: "React.js", icon: <SiReact className="text-cyan-400" />, level: 82 },
+      { name: "Next.js", icon: <SiNextdotjs className="text-white" />, level: 78 },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-cyan-300" />, level: 88 },
+      { name: "Python", icon: <SiPython className="text-yellow-300" />, level: 80 },
     ],
   },
   {
@@ -47,12 +47,12 @@ const skillGroups = [
     border: "border-emerald-400/20",
     glow: "hover:shadow-[0_0_20px_rgba(52,211,153,0.15)]",
     skills: [
-      { name: "AWS (CCP)", icon: <FaAws className="text-orange-400" />, level: 60 },
-      { name: "Arsitektur Cloud", icon: <Cloud size={16} className="text-emerald-400" />, level: 60 },
-      { name: "OWASP Top 10", icon: <Shield size={16} className="text-red-400" />, level: 70 },
-      { name: "Mitigasi SQLi/XSS", icon: <Shield size={16} className="text-yellow-400" />, level: 68 },
-      { name: "Git & GitHub", icon: <SiGit className="text-orange-500" />, level: 82 },
-      { name: "Web Security", icon: <Shield size={16} className="text-emerald-400" />, level: 65 },
+      { name: "AWS (CCP)", icon: <FaAws className="text-orange-400" />, level: 65 },
+      { name: "Arsitektur Cloud", icon: <Cloud size={16} className="text-emerald-400" />, level: 62 },
+      { name: "OWASP Top 10", icon: <Shield size={16} className="text-red-400" />, level: 75 },
+      { name: "Mitigasi SQLi/XSS", icon: <Shield size={16} className="text-yellow-400" />, level: 72 },
+      { name: "Git & GitHub", icon: <SiGit className="text-orange-500" />, level: 85 },
+      { name: "Web Security", icon: <Shield size={16} className="text-emerald-400" />, level: 68 },
     ],
   },
 ];
@@ -146,9 +146,9 @@ export default function About() {
               <h3 className="text-xl font-semibold text-white mb-1">Marcellinus Alfrits Sorongan</h3>
               <p className="text-cyan-400 font-mono text-sm mb-4">IT Student · Web Developer · Data Enthusiast</p>
               <p className="text-white/60 leading-relaxed text-sm md:text-base">
-                Saya adalah mahasiswa S-1 Sistem Informasi di Universitas Amikom Yogyakarta yang memiliki minat mendalam dalam pengembangan web modern, analitik data, dan keamanan cloud. 
+                Saya adalah mahasiswa S-1 Sistem Informasi di Universitas Amikom Yogyakarta yang memiliki minat mendalam dalam pengembangan web modern, analitik data, dan keamanan siber. 
                 Saya percaya bahwa teknologi yang baik harus memecahkan masalah nyata — itulah mengapa setiap proyek yang saya kerjakan selalu berfokus pada dampak dan kualitas.
-                Saat ini saya aktif mempersiapkan sertifikasi AWS Cloud Practitioner dan terus mengasah kemampuan dalam ekosistem JavaScript modern.
+                Saat ini saya aktif mempersiapkan sertifikasi AWS Cloud Practitioner, mendalami OWASP security practices, dan terus mengasah kemampuan dalam ekosistem JavaScript modern.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 {["Next.js", "Python", "Data Mining", "NLP", "AWS", "UI/UX"].map((tag) => (

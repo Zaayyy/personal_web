@@ -125,6 +125,30 @@ const projects = [
     demo: null,
     category: "data",
   },
+  {
+    id: "portfolio-website",
+    title: "Portfolio Website",
+    subtitle: "Personal Branding & Dev",
+    emoji: "✨",
+    status: "Live",
+    statusColor: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
+    description:
+      "Website portofolio personal yang dibangun dari nol dengan desain premium bertema space/dark — menampilkan animasi orbit, aurora blobs, terminal widget interaktif, dan scroll-triggered animations.",
+    details: [
+      "Desain UI premium dengan glassmorphism, neon glow, dan parallax",
+      "Animasi berbasis rAF: orbit sistem icon, meteor, aurora blobs",
+      "Scroll-triggered reveal animations dengan spring cubic-bezier",
+      "Fully responsive dengan mobile-first approach menggunakan Tailwind CSS",
+    ],
+    techStack: ["Next.js 15", "TypeScript", "Tailwind CSS v4", "Framer-like CSS", "Lucide Icons"],
+    icon: <Globe size={24} className="text-emerald-400" />,
+    gradient: "from-emerald-500/20 via-teal-600/10 to-transparent",
+    border: "border-emerald-400/20",
+    tagColor: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20",
+    github: "https://github.com/Zaayyy",
+    demo: null,
+    category: "web",
+  },
 ];
 
 const CATEGORIES = [
