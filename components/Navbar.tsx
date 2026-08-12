@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon, Zap, Volume2, VolumeX } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
+import { useSoundFX } from "@/components/useSoundFX";
 
 const navLinks = [
   { href: "#hero", label: "Home" },
@@ -16,6 +18,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const { theme, cycleTheme } = useTheme();
+  const { isMuted, toggleMute, playClickSound, playThemeSound, playHoverSound } = useSoundFX();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,9 +40,19 @@ export default function Navbar() {
   }, []);
 
   const handleNavClick = (href: string) => {
+    playClickSound();
     setMobileOpen(false);
     const el = document.getElementById(href.slice(1));
     if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleThemeToggle = () => {
+    cycleTheme();
+    playThemeSound();
+  };
+
+  const handleSoundToggle = () => {
+    toggleMute();
   };
 
   return (
@@ -53,6 +68,7 @@ export default function Navbar() {
         <a
           href="#hero"
           onClick={(e) => { e.preventDefault(); handleNavClick("#hero"); }}
+          onMouseEnter={playHoverSound}
           className="flex items-center gap-2.5 group"
         >
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shadow-[0_0_15px_rgba(0,212,255,0.3)] group-hover:shadow-[0_0_25px_rgba(0,212,255,0.5)] transition-shadow duration-300">
@@ -63,14 +79,14 @@ export default function Navbar() {
           </span>
         </a>
 
-
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                onMouseEnter={playHoverSound}
                 className={`relative text-sm font-medium tracking-wide transition-all duration-300 group ${
                   activeSection === link.href.slice(1)
                     ? "text-cyan-400"
@@ -88,27 +104,61 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Contact CTA */}
-        <a
-          href="#contact"
-          onClick={(e) => { e.preventDefault(); handleNavClick("#contact"); }}
-          className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium 
-            bg-gradient-to-r from-cyan-500/20 to-violet-500/20 border border-cyan-400/30 
-            text-cyan-400 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(0,212,255,0.2)]
-            transition-all duration-300"
-        >
-          Contact Me
-        </a>
+        {/* Actions: Sound, Theme Toggle & Contact CTA */}
+        <div className="flex items-center gap-3">
+          {/* Sound FX Toggle Button */}
+          <button
+            id="sound-toggle-btn"
+            onClick={handleSoundToggle}
+            onMouseEnter={playHoverSound}
+            title={isMuted ? "Unmute Sound FX" : "Mute Sound FX"}
+            className={`w-9 h-9 rounded-full flex items-center justify-center glass border transition-all duration-300 ${
+              isMuted
+                ? "border-red-500/30 text-red-400/70 hover:text-red-400 hover:border-red-400/60"
+                : "border-cyan-400/30 text-cyan-400 hover:shadow-[0_0_15px_rgba(0,212,255,0.3)]"
+            }`}
+            aria-label="Toggle Sound"
+          >
+            {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
 
-        {/* Mobile hamburger */}
-        <button
-          id="mobile-menu-toggle"
-          className="ml-auto md:hidden text-white/70 hover:text-white transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          {/* Theme Switcher Button */}
+          <button
+            id="theme-switcher-btn"
+            onClick={handleThemeToggle}
+            onMouseEnter={playHoverSound}
+            title={`Current Theme: ${theme.toUpperCase()} (Click to switch)`}
+            className="w-9 h-9 rounded-full flex items-center justify-center glass border border-white/15 text-white/80 hover:text-cyan-400 hover:border-cyan-400/40 hover:shadow-[0_0_15px_rgba(0,212,255,0.3)] transition-all duration-300"
+            aria-label="Switch Theme"
+          >
+            {theme === "dark" && <Moon size={16} className="text-cyan-400" />}
+            {theme === "light" && <Sun size={16} className="text-amber-400" />}
+            {theme === "cyberpunk" && <Zap size={16} className="text-pink-400" />}
+          </button>
+
+          {/* Contact CTA */}
+          <a
+            href="#contact"
+            onClick={(e) => { e.preventDefault(); handleNavClick("#contact"); }}
+            onMouseEnter={playHoverSound}
+            className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold
+              bg-gradient-to-r from-cyan-500/20 to-violet-500/20 border border-cyan-400/30 
+              text-cyan-400 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(0,212,255,0.2)]
+              transition-all duration-300"
+          >
+            Contact Me
+          </a>
+
+          {/* Mobile hamburger */}
+          <button
+            id="mobile-menu-toggle"
+            className="ml-1 md:hidden text-white/70 hover:text-white transition-colors"
+            onClick={() => { setMobileOpen(!mobileOpen); playClickSound(); }}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

@@ -873,3 +873,59 @@ body {
   white-space: nowrap;
   overflow: hidden;
 }
+
+/* ────────────────────────────── Theme Overrides ────────────────────────────── */
+
+/* Light Theme */
+html[data-theme="light"], .light {
+  color-scheme: light;
+}
+html[data-theme="light"] body, .light body {
+  background: linear-gradient(135deg, #f0f4f9 0%, #e2e8f0 50%, #f8fafc 100%) !important;
+  color: #0f172a !important;
+}
+html[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+html[data-theme="light"] .glass-strong {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+html[data-theme="light"] .text-white {
+  color: #0f172a !important;
+}
+html[data-theme="light"] .text-white\/70 {
+  color: #334155 !important;
+}
+html[data-theme="light"] .text-white\/60 {
+  color: #475569 !important;
+}
+html[data-theme="light"] .text-white\/50 {
+  color: #64748b !important;
+}
+html[data-theme="light"] .text-white\/40 {
+  color: #64748b !important;
+}
+html[data-theme="light"] .bg-\[\#020205\],
+html[data-theme="light"] .bg-\[\#050a15\] {
+  background-color: #f1f5f9 !important;
+}
+
+/* Cyberpunk Theme */
+html[data-theme="cyberpunk"], .cyberpunk {
+  color-scheme: dark;
+}
+html[data-theme="cyberpunk"] body, .cyberpunk body {
+  background: linear-gradient(135deg, #0d021a 0%, #15002b 50%, #050012 100%) !important;
+  color: #f4f4f5 !important;
+}
+html[data-theme="cyberpunk"] .glass {
+  background: rgba(236, 72, 153, 0.06) !important;
+  border: 1px solid rgba(236, 72, 153, 0.2) !important;
+  box-shadow: 0 0 25px rgba(236, 72, 153, 0.15);
+}
+
