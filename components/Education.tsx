@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
 import Image from "next/image";
-import { GraduationCap, Award, BookOpen, Target, CheckCircle, Clock, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { GraduationCap, Award, BookOpen, Target, CheckCircle, Clock, MapPin, ExternalLink } from "lucide-react";
 import { FaAws } from "react-icons/fa";
 
 const education = [
@@ -71,7 +71,6 @@ const certifications = [
     name: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     status: "Persiapan",
-    targetDate: "2026",
     icon: <FaAws size={24} className="text-orange-400" />,
     description: "Sertifikasi foundational AWS yang membuktikan pemahaman konsep cloud, layanan AWS inti, keamanan, arsitektur, dan model pricing.",
     tags: ["Cloud Computing", "AWS", "Security", "Architecture"],
@@ -87,7 +86,6 @@ const certifications = [
     name: "Web Application Security",
     issuer: "OWASP Foundation",
     status: "Dipelajari",
-    targetDate: "Ongoing",
     icon: <Award size={24} className="text-violet-400" />,
     description: "Pemahaman mendalam tentang OWASP Top 10, penetration testing dasar, dan mitigasi kerentanan web seperti SQL Injection, XSS, dan CSRF.",
     tags: ["OWASP", "Penetration Testing", "SQL Injection", "XSS"],
@@ -103,7 +101,6 @@ const certifications = [
     name: "Data Science & Machine Learning",
     issuer: "Self-Learning / Projects",
     status: "Diterapkan",
-    targetDate: "Ongoing",
     icon: <Target size={24} className="text-emerald-400" />,
     description: "Keterampilan analitik data yang diperoleh melalui proyek nyata: crawling, preprocessing, NLP, dan implementasi algoritma ML dasar.",
     tags: ["Python", "NLP", "Scikit-learn", "Data Analysis"],
@@ -117,28 +114,6 @@ const certifications = [
 ];
 
 export default function Education() {
-  useEffect(() => {
-    const progressBars = document.querySelectorAll(".cert-progress-bar");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            const bar = entry.target.querySelector(".cert-bar-fill") as HTMLElement;
-            if (bar) {
-              const level = bar.dataset.level || "0";
-              setTimeout(() => { bar.style.width = `${level}%`; }, 200);
-            }
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
-    progressBars.forEach((bar) => observer.observe(bar));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="education" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
@@ -147,7 +122,13 @@ export default function Education() {
 
       <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-16 animate-on-scroll">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
+        >
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// PENDIDIKAN</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Pendidikan &{" "}
@@ -157,21 +138,31 @@ export default function Education() {
           <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
             Membangun fondasi akademik yang kuat sambil terus mengembangkan keahlian profesional melalui sertifikasi dan pembelajaran mandiri.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Education card */}
-        <div className="mb-12">
-          <h3 className="text-lg font-semibold text-white/70 mb-6 flex items-center gap-2 animate-on-scroll">
+        {/* Education cards */}
+        <div className="mb-16">
+          <motion.h3
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-lg font-semibold text-white/80 mb-6 flex items-center gap-2"
+          >
             <GraduationCap size={20} className="text-cyan-400" />
             Pendidikan Formal
-          </h3>
+          </motion.h3>
 
           <div className="flex flex-col gap-6">
             {education.map((edu, idx) => (
-              <div
+              <motion.div
                 key={edu.institution}
-                className={`animate-on-scroll ${idx % 2 === 0 ? "reveal-slide-left" : "reveal-slide-right"} glass gradient-border rounded-2xl p-6 md:p-8
-                  hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-300`}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200, delay: idx * 0.15 }}
+                className="glass gradient-border rounded-2xl p-6 md:p-8
+                  hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)] transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Logo / Icon */}
@@ -195,10 +186,10 @@ export default function Education() {
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                       <div>
                         <h4 className="text-xl font-bold text-white">{edu.institution}</h4>
-                        <p className="text-cyan-400 font-medium">{edu.degree}</p>
+                        <p className="text-cyan-400 font-medium text-sm">{edu.degree}</p>
                       </div>
                       <div className="flex flex-col items-start sm:items-end gap-1">
-                        <span className="font-mono text-sm text-white/40">{edu.period}</span>
+                        <span className="font-mono text-xs text-white/40">{edu.period}</span>
                         <span className={`px-3 py-0.5 rounded-full text-xs font-medium border ${edu.statusColor}`}>
                           {edu.status}
                         </span>
@@ -219,42 +210,53 @@ export default function Education() {
                     {/* Google Maps Button */}
                     {edu.mapsUrl && (
                       <div className="mt-5">
-                        <a
+                        <motion.a
                           href={edu.mapsUrl}
                           target="_blank"
                           rel="noopener noreferrer"
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
                           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold
                             bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/40 
-                            text-white/60 hover:text-cyan-400 shadow-sm transition-all duration-300 group"
+                            text-white/70 hover:text-cyan-300 shadow-sm transition-all duration-300 group"
                         >
                           <MapPin size={13} className="text-white/40 group-hover:text-cyan-400 transition-colors" />
                           <span>Lihat Lokasi di Google Maps</span>
-                        </a>
+                          <ExternalLink size={11} className="opacity-50" />
+                        </motion.a>
                       </div>
                     )}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Certifications */}
         <div>
-          <h3 className="text-lg font-semibold text-white/70 mb-6 flex items-center gap-2 animate-on-scroll">
+          <motion.h3
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-lg font-semibold text-white/80 mb-6 flex items-center gap-2"
+          >
             <Award size={20} className="text-violet-400" />
             Sertifikasi & Keahlian Profesional
-          </h3>
+          </motion.h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {certifications.map((cert, idx) => (
-              <div
+              <motion.div
                 key={cert.id}
                 id={`cert-${cert.id}`}
-                className="cert-progress-bar animate-on-scroll reveal-spring-up glass gradient-border rounded-2xl p-6
-                  hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]
-                  transition-all duration-300"
-                style={{ transitionDelay: `${idx * 0.15}s` }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200, delay: idx * 0.15 }}
+                className="glass gradient-border rounded-2xl p-6
+                  hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)] transition-all duration-300"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -281,10 +283,12 @@ export default function Education() {
                     <span className="text-xs font-mono text-white/50">{cert.progress}%</span>
                   </div>
                   <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                    <div
-                      className={`cert-bar-fill h-full rounded-full bg-gradient-to-r ${cert.progressColor} transition-all duration-1000 ease-out`}
-                      data-level={cert.progress}
-                      style={{ width: "0%" }}
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${cert.progress}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                      className={`h-full rounded-full bg-gradient-to-r ${cert.progressColor}`}
                     />
                   </div>
                 </div>
@@ -297,7 +301,7 @@ export default function Education() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

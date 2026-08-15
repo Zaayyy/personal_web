@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
-import { Download, ChevronDown, Terminal, Code2, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { Download, ChevronDown, Terminal, Code2, Zap, Sparkles } from "lucide-react";
 import { FiGithub, FiInstagram } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa";
 import {
@@ -118,8 +119,8 @@ function OrbitSystem({ paused }: { paused: boolean }) {
     <div className="absolute inset-0 pointer-events-none">
       {/* Orbit rings */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="absolute w-[260px] h-[260px] rounded-full border border-white/[0.06] orbit-ring-1" />
-        <div className="absolute w-[350px] h-[350px] rounded-full border border-white/[0.04] orbit-ring-2" />
+        <div className="absolute w-[260px] h-[260px] rounded-full border border-white/[0.08] orbit-ring-1" />
+        <div className="absolute w-[350px] h-[350px] rounded-full border border-white/[0.05] orbit-ring-2" />
       </div>
 
       {/* Orbit icons */}
@@ -141,20 +142,21 @@ function OrbitSystem({ paused }: { paused: boolean }) {
             onMouseEnter={() => setHoveredIdx(i)}
             onMouseLeave={() => setHoveredIdx(null)}
           >
-            <div
+            <motion.div
+              whileHover={{ scale: 1.3 }}
               className={`relative w-9 h-9 rounded-full flex items-center justify-center text-base transition-all duration-300 cursor-default
                 ${isHovered
-                  ? "scale-125 bg-white/15 shadow-[0_0_15px_rgba(0,212,255,0.5)]"
+                  ? "bg-white/20 shadow-[0_0_20px_rgba(0,212,255,0.6)] border border-cyan-400/50"
                   : "bg-white/5 border border-white/10"
                 }`}
             >
               {orbit.icon}
               {isHovered && (
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/80 text-cyan-400 whitespace-nowrap border border-cyan-400/30">
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/90 text-cyan-400 whitespace-nowrap border border-cyan-400/40 shadow-md">
                   {orbit.label}
                 </div>
               )}
-            </div>
+            </motion.div>
           </div>
         );
       })}
@@ -176,18 +178,22 @@ function TerminalWidget() {
   }, []);
 
   return (
-    <div className="w-full max-w-sm mx-auto lg:mx-0 glass border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.6)] mt-8 lg:mt-0">
+    <motion.div
+      whileHover={{ y: -5, boxShadow: "0 25px 70px rgba(0,0,0,0.8)" }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="w-full max-w-sm mx-auto lg:mx-0 glass border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.6)] mt-8 lg:mt-0"
+    >
       {/* Title bar */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/3">
         <div className="w-3 h-3 rounded-full bg-red-500/80" />
         <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
         <div className="w-3 h-3 rounded-full bg-green-500/80" />
-        <span className="ml-2 text-xs font-mono text-white/30 flex items-center gap-1">
-          <Terminal size={10} /> terminal
+        <span className="ml-2 text-xs font-mono text-white/40 flex items-center gap-1">
+          <Terminal size={10} /> terminal@marcell:~
         </span>
       </div>
       {/* Lines */}
-      <div className="p-4 font-mono text-xs space-y-1 min-h-[200px]">
+      <div className="p-4 font-mono text-xs space-y-1.5 min-h-[200px]">
         {TERMINAL_LINES.map((line, i) => (
           <div
             key={i}
@@ -204,7 +210,7 @@ function TerminalWidget() {
           <span className="inline-block w-2 h-4 bg-cyan-400/80 animate-pulse mt-1" />
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -214,27 +220,29 @@ function StatCard({ value, suffix, label, color, triggered }: {
 }) {
   const count = useCounter(value, 1800, triggered);
   return (
-    <div className="flex flex-col items-center gap-0.5 group">
-      <div className={`text-2xl md:text-3xl font-bold font-mono ${color} group-hover:scale-110 transition-transform duration-300`}>
+    <motion.div
+      whileHover={{ scale: 1.15 }}
+      transition={{ type: "spring", stiffness: 400 }}
+      className="flex flex-col items-center gap-0.5 cursor-default"
+    >
+      <div className={`text-2xl md:text-3xl font-bold font-mono ${color}`}>
         {count}{suffix}
       </div>
       <div className="text-[11px] text-white/40 tracking-wide font-medium">{label}</div>
-    </div>
+    </motion.div>
   );
 }
 
 /* ─────────────── Particles ─────────────── */
 const PARTICLES = [
-  { w: 3, h: 3, top: "12%", left: "8%",  delay: "0s",   dur: "7s",  color: "rgba(0,212,255,0.5)" },
-  { w: 5, h: 5, top: "22%", left: "88%", delay: "1.2s", dur: "9s",  color: "rgba(139,92,246,0.5)" },
-  { w: 2, h: 2, top: "65%", left: "4%",  delay: "2s",   dur: "6s",  color: "rgba(255,255,255,0.7)" },
-  { w: 4, h: 4, top: "72%", left: "93%", delay: "0.6s", dur: "8s",  color: "rgba(236,72,153,0.5)" },
-  { w: 3, h: 3, top: "45%", left: "97%", delay: "3.2s", dur: "10s", color: "rgba(0,212,255,0.4)" },
-  { w: 2, h: 2, top: "82%", left: "18%", delay: "1.8s", dur: "7s",  color: "rgba(139,92,246,0.6)" },
-  { w: 5, h: 5, top: "8%",  left: "55%", delay: "4s",   dur: "9s",  color: "rgba(236,72,153,0.4)" },
-  { w: 3, h: 3, top: "55%", left: "48%", delay: "2.8s", dur: "8s",  color: "rgba(255,255,255,0.5)" },
-  { w: 4, h: 4, top: "30%", left: "2%",  delay: "0.4s", dur: "11s", color: "rgba(0,212,255,0.3)" },
-  { w: 2, h: 2, top: "90%", left: "70%", delay: "5s",   dur: "6s",  color: "rgba(139,92,246,0.4)" },
+  { w: 3, h: 3, top: "12%", left: "8%",  delay: "0s",   dur: "7s",  color: "rgba(0,212,255,0.6)" },
+  { w: 5, h: 5, top: "22%", left: "88%", delay: "1.2s", dur: "9s",  color: "rgba(139,92,246,0.6)" },
+  { w: 2, h: 2, top: "65%", left: "4%",  delay: "2s",   dur: "6s",  color: "rgba(255,255,255,0.8)" },
+  { w: 4, h: 4, top: "72%", left: "93%", delay: "0.6s", dur: "8s",  color: "rgba(236,72,153,0.6)" },
+  { w: 3, h: 3, top: "45%", left: "97%", delay: "3.2s", dur: "10s", color: "rgba(0,212,255,0.5)" },
+  { w: 2, h: 2, top: "82%", left: "18%", delay: "1.8s", dur: "7s",  color: "rgba(139,92,246,0.7)" },
+  { w: 5, h: 5, top: "8%",  left: "55%", delay: "4s",   dur: "9s",  color: "rgba(236,72,153,0.5)" },
+  { w: 3, h: 3, top: "55%", left: "48%", delay: "2.8s", dur: "8s",  color: "rgba(255,255,255,0.6)" },
 ];
 
 /* ─────────────── Main Hero ─────────────── */
@@ -307,7 +315,7 @@ export default function Hero() {
             transition: "transform 0.18s ease-out",
           }}
         >
-          {/* Aurora blobs — slow organic movement */}
+          {/* Aurora blobs */}
           <div className="aurora-blob aurora-blob-1" />
           <div className="aurora-blob aurora-blob-2" />
           <div className="aurora-blob aurora-blob-3" />
@@ -358,53 +366,66 @@ export default function Hero() {
         {/* ── LEFT COLUMN ── */}
         <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
 
-          {/* Status badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-cyan-400/25 text-cyan-400 text-xs font-mono mb-7 animate-fade-in">
+          {/* Status badge with Framer Motion */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-cyan-400/25 text-cyan-400 text-xs font-mono mb-7"
+          >
             <span className="relative flex w-2 h-2">
               <span className="neon-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex rounded-full w-2 h-2 bg-cyan-400" />
             </span>
             Available for Opportunities · Yogyakarta, ID
-          </div>
+          </motion.div>
 
-          {/* Name */}
-          <h1
-            className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-5 animate-fade-in-up"
-            style={{ animationDelay: "0.1s", opacity: 0 }}
+          {/* Name heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-5"
           >
             <span className="text-white">Marcellinus</span>
             <br />
             <span className="gradient-text">Alfrits</span>{" "}
             <span className="text-white/90">Sorongan</span>
-          </h1>
+          </motion.h1>
 
-          {/* Typewriter */}
-          <div
-            className="flex items-center gap-2 mb-6 h-10 animate-fade-in-up"
-            style={{ animationDelay: "0.25s", opacity: 0 }}
+          {/* Typewriter line */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex items-center gap-2 mb-6 h-10"
           >
-            <Code2 size={16} className="text-cyan-400 flex-shrink-0" />
-            <p className="text-lg md:text-xl text-white/70 font-light font-mono">
+            <Code2 size={18} className="text-cyan-400 flex-shrink-0 animate-pulse" />
+            <p className="text-lg md:text-xl text-white/80 font-light font-mono">
               <span className="typing-cursor">{headline}</span>
             </p>
-          </div>
+          </motion.div>
 
-          {/* Bio */}
-          <p
-            className="text-white/50 text-sm md:text-base max-w-xl leading-relaxed mb-8 animate-fade-in-up"
-            style={{ animationDelay: "0.4s", opacity: 0 }}
+          {/* Bio paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.45 }}
+            className="text-white/60 text-sm md:text-base max-w-xl leading-relaxed mb-8"
           >
             Crafting meaningful digital experiences — from full-stack web apps
             and NLP pipelines to cloud infrastructure and cybersecurity.
             Passionate about turning complex problems into elegant, scalable,
             and impactful solutions.
-          </p>
+          </motion.p>
 
-          {/* Stats */}
-          <div
+          {/* Stats section */}
+          <motion.div
             ref={statsRef}
-            className="flex items-center gap-8 mb-10 animate-fade-in-up"
-            style={{ animationDelay: "0.55s", opacity: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex items-center gap-8 mb-10"
           >
             <StatCard value={18}  suffix="+"  label="Projects"    color="text-cyan-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
@@ -413,91 +434,104 @@ export default function Hero() {
             <StatCard value={97}  suffix="%"  label="Dedication"  color="text-pink-400"   triggered={statsVisible} />
             <div className="w-px h-8 bg-white/10" />
             <StatCard value={3}   suffix="yr" label="Experience"  color="text-emerald-400" triggered={statsVisible} />
-          </div>
+          </motion.div>
 
-          {/* CTA Buttons */}
-          <div
-            className="flex flex-wrap items-center gap-4 mb-10 animate-fade-in-up"
-            style={{ animationDelay: "0.7s", opacity: 0 }}
+          {/* CTA Buttons with Framer Motion spring physics */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="flex flex-wrap items-center gap-4 mb-10"
           >
-            <a
+            <motion.a
               id="download-resume-btn"
               href="/resume-placeholder.pdf"
               download
+              whileHover={{ scale: 1.06, boxShadow: "0 0 35px rgba(0,212,255,0.6)" }}
+              whileTap={{ scale: 0.95 }}
               className="btn-neon flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
-                bg-gradient-to-r from-cyan-500 to-violet-600 text-white
-                hover:shadow-[0_0_35px_rgba(0,212,255,0.5)] hover:scale-105
+                bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white
+                shadow-[0_0_20px_rgba(0,212,255,0.3)]
                 transition-all duration-300"
             >
               <Download size={16} />
               Download Resume
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
               id="view-projects-btn"
               href="#projects"
               onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }}
+              whileHover={{ scale: 1.05, borderColor: "rgba(0,212,255,0.5)" }}
+              whileTap={{ scale: 0.95 }}
               className="flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm
-                glass border border-white/15 text-white/70
-                hover:border-cyan-400/40 hover:text-white hover:shadow-[0_0_20px_rgba(0,212,255,0.15)]
+                glass border border-white/15 text-white/80 hover:text-white
                 transition-all duration-300"
             >
               View Projects
-            </a>
+            </motion.a>
 
             <div className="flex items-center gap-3">
               {[
-                { id: "github-profile-btn",    href: "https://github.com/Zaayyy",                          icon: <FiGithub size={18} />,    tip: "GitHub",    border: "hover:border-cyan-400/50",   glow: "hover:shadow-[0_0_20px_rgba(0,212,255,0.2)]" },
-                { id: "linkedin-profile-btn",  href: "https://www.linkedin.com/in/marcell-sorongan-36070a299", icon: <FaLinkedinIn size={16} />, tip: "LinkedIn",  border: "hover:border-blue-400/50",   glow: "hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]" },
-                { id: "instagram-profile-btn", href: "https://www.instagram.com/aceeeelllllll",             icon: <FiInstagram size={18} />, tip: "Instagram", border: "hover:border-pink-400/50",   glow: "hover:shadow-[0_0_20px_rgba(236,72,153,0.2)]" },
+                { id: "github-profile-btn",    href: "https://github.com/Zaayyy",                          icon: <FiGithub size={18} />,    tip: "GitHub" },
+                { id: "linkedin-profile-btn",  href: "https://www.linkedin.com/in/marcell-sorongan-36070a299", icon: <FaLinkedinIn size={16} />, tip: "LinkedIn" },
+                { id: "instagram-profile-btn", href: "https://www.instagram.com/aceeeelllllll",             icon: <FiInstagram size={18} />, tip: "Instagram" },
               ].map((s) => (
-                <a
+                <motion.a
                   key={s.id}
                   id={s.id}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   title={s.tip}
-                  className={`w-11 h-11 rounded-full flex items-center justify-center
-                    glass border border-white/10 text-white/70
-                    ${s.border} ${s.glow} hover:text-white hover:scale-110
-                    transition-all duration-300`}
+                  whileHover={{ scale: 1.15, rotate: 5, boxShadow: "0 0 20px rgba(0,212,255,0.4)" }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-11 h-11 rounded-full flex items-center justify-center
+                    glass border border-white/10 text-white/70 hover:text-white
+                    transition-all duration-300"
                 >
                   {s.icon}
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Tech tags row */}
-          <div
-            className="flex flex-wrap gap-2 animate-fade-in-up"
-            style={{ animationDelay: "0.85s", opacity: 0 }}
+          {/* Tech tags */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="flex flex-wrap gap-2"
           >
             {["Next.js", "TypeScript", "Python", "AWS", "NLP", "PostgreSQL", "MySQL", "OWASP", "Security"].map((tag) => (
-              <span
+              <motion.span
                 key={tag}
-                className="px-3 py-1 rounded-full text-[11px] font-mono glass border border-white/8 text-white/50 hover:border-cyan-400/30 hover:text-cyan-400/80 transition-all duration-300 cursor-default"
+                whileHover={{ scale: 1.08, y: -2 }}
+                className="px-3 py-1 rounded-full text-[11px] font-mono glass border border-white/10 text-white/60 hover:border-cyan-400/40 hover:text-cyan-300 transition-all duration-300 cursor-default"
               >
                 {tag}
-              </span>
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="flex-shrink-0 flex flex-col items-center gap-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.3 }}
+          className="flex-shrink-0 flex flex-col items-center gap-6"
+        >
 
           {/* Avatar + Orbit system */}
           <div
-            className="relative w-[200px] h-[200px] md:w-[220px] md:h-[220px] animate-fade-in"
-            style={{ animationDelay: "0.2s" }}
+            className="relative w-[200px] h-[200px] md:w-[220px] md:h-[220px]"
             onMouseEnter={() => setOrbitPaused(true)}
             onMouseLeave={() => setOrbitPaused(false)}
           >
             {/* Outer glow rings */}
             <div className="absolute inset-[-30px] rounded-full border border-cyan-400/20 animate-spin-slow" />
-            <div className="absolute inset-[-50px] rounded-full border border-violet-400/10 animate-spin-reverse" />
+            <div className="absolute inset-[-50px] rounded-full border border-violet-400/15 animate-spin-reverse" />
 
             {/* Orbit icon system */}
             <div className="absolute inset-[-100px] md:inset-[-110px]">
@@ -505,10 +539,13 @@ export default function Hero() {
             </div>
 
             {/* Avatar circle */}
-            <div className="avatar-shimmer relative w-full h-full rounded-full overflow-hidden
-              border-2 border-white/20
-              shadow-[0_0_0_4px_rgba(0,212,255,0.1),0_0_40px_rgba(139,92,246,0.4),0_0_80px_rgba(0,212,255,0.15)]
-              group cursor-default"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="avatar-shimmer relative w-full h-full rounded-full overflow-hidden
+                border-2 border-white/20
+                shadow-[0_0_0_4px_rgba(0,212,255,0.15),0_0_50px_rgba(139,92,246,0.5),0_0_90px_rgba(0,212,255,0.25)]
+                group cursor-default"
             >
               {/* Avatar image */}
               <Image
@@ -522,37 +559,39 @@ export default function Hero() {
               />
 
               {/* Overlay shimmer on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-violet-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-violet-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </motion.div>
 
             {/* Floating badge */}
-            <div className="absolute -bottom-4 -right-2 flex items-center gap-1.5 px-3 py-1.5 rounded-full
-              bg-gradient-to-r from-cyan-500 to-violet-600 text-white text-[11px] font-semibold
-              shadow-[0_4px_20px_rgba(0,212,255,0.4)] animate-float"
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+              className="absolute -bottom-4 -right-2 flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                bg-gradient-to-r from-cyan-500 to-violet-600 text-white text-[11px] font-semibold
+                shadow-[0_4px_25px_rgba(0,212,255,0.5)] cursor-default"
             >
-              <Zap size={11} />
+              <Zap size={11} className="text-yellow-300" />
               Open to Work
-            </div>
+            </motion.div>
           </div>
 
           {/* Terminal widget */}
-          <div
-            className="w-full max-w-[320px] animate-fade-in-up"
-            style={{ animationDelay: "0.5s", opacity: 0 }}
-          >
+          <div className="w-full max-w-[320px]">
             <TerminalWidget />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* ── Scroll indicator ── */}
-      <button
+      <motion.button
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/25 hover:text-white/60 transition-colors group z-10"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 hover:text-white/80 transition-colors group z-10 cursor-pointer"
       >
         <span className="text-[10px] font-mono tracking-[0.25em]">SCROLL</span>
-        <ChevronDown size={18} className="animate-bounce group-hover:text-cyan-400 transition-colors" />
-      </button>
+        <ChevronDown size={18} className="group-hover:text-cyan-400 transition-colors" />
+      </motion.button>
     </section>
   );
 }

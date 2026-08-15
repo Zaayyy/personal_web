@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Send, Mail, MapPin, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { FiGithub, FiInstagram } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa";
@@ -64,26 +65,9 @@ export default function Contact() {
     formState: { errors },
   } = useForm<FormData>();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   const onSubmit = async (data: FormData) => {
     setFormStatus("sending");
-    // Simulate sending (replace with actual API call or EmailJS)
-    await new Promise((r) => setTimeout(r, 1500));
-    // Build mailto fallback
+    await new Promise((r) => setTimeout(r, 1200));
     const mailtoUrl = `mailto:soronganmarcell@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(
       `Halo Marcell,\n\nNama: ${data.name}\nEmail: ${data.email}\n\n${data.message}`
     )}`;
@@ -101,7 +85,13 @@ export default function Contact() {
 
       <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-16 animate-on-scroll">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
+        >
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// KONTAK</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Mari{" "}
@@ -111,19 +101,25 @@ export default function Contact() {
           <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
             Punya proyek menarik, tawaran kolaborasi, atau sekadar ingin berdiskusi tentang teknologi? Saya selalu terbuka untuk percakapan baru!
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left: Contact info */}
-          <div className="lg:col-span-2 animate-on-scroll reveal-slide-left">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-2"
+          >
             <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-3 text-white/50">
+              <div className="flex items-center gap-3 text-white/60">
                 <MapPin size={16} className="text-cyan-400 flex-shrink-0" />
-                <span className="text-sm">Yogyakarta, Indonesia 🇮🇩</span>
+                <span className="text-sm font-medium">Yogyakarta, Indonesia 🇮🇩</span>
               </div>
-              <div className="flex items-center gap-3 text-white/50">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-sm">Terbuka untuk peluang & kolaborasi</span>
+              <div className="flex items-center gap-3 text-white/60">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-sm font-medium">Terbuka untuk peluang & kolaborasi</span>
               </div>
             </div>
 
@@ -134,28 +130,36 @@ export default function Contact() {
             {/* Social links */}
             <div className="space-y-3">
               {socialLinks.map((social) => (
-                <a
+                <motion.a
                   key={social.id}
                   id={social.id}
                   href={social.href}
                   target={social.href.startsWith("mailto") ? undefined : "_blank"}
                   rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className={`group flex items-center gap-4 p-4 rounded-xl glass border border-white/8 text-white/50 transition-all duration-300 ${social.color}`}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`group flex items-center gap-4 p-4 rounded-xl glass border border-white/8 text-white/60 transition-all duration-300 ${social.color}`}
                 >
                   <div className={`w-10 h-10 rounded-lg glass border border-white/10 flex items-center justify-center transition-all duration-300 ${social.bg}`}>
                     {social.icon}
                   </div>
                   <div>
-                    <p className="font-medium text-sm">{social.label}</p>
+                    <p className="font-medium text-sm text-white/90 group-hover:text-cyan-300">{social.label}</p>
                     <p className="text-xs opacity-60 font-mono">{social.handle}</p>
                   </div>
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Contact form */}
-          <div className="lg:col-span-3 animate-on-scroll reveal-slide-right" style={{ transitionDelay: "0.15s" }}>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="lg:col-span-3"
+          >
             <div className="glass gradient-border rounded-2xl p-8">
               <h3 className="font-semibold text-white text-lg mb-6">Kirim Pesan</h3>
 
@@ -171,7 +175,7 @@ export default function Contact() {
                       type="text"
                       placeholder="John Doe"
                       className={`w-full px-4 py-3 rounded-xl glass border text-white placeholder-white/20 text-sm
-                        focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]
+                        focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
                         transition-all duration-300 bg-transparent
                         ${errors.name ? "border-red-400/50" : "border-white/10"}`}
                       {...register("name", { required: "Nama wajib diisi" })}
@@ -189,7 +193,7 @@ export default function Contact() {
                       type="email"
                       placeholder="john@example.com"
                       className={`w-full px-4 py-3 rounded-xl glass border text-white placeholder-white/20 text-sm
-                        focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]
+                        focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
                         transition-all duration-300 bg-transparent
                         ${errors.email ? "border-red-400/50" : "border-white/10"}`}
                       {...register("email", {
@@ -213,7 +217,7 @@ export default function Contact() {
                     type="text"
                     placeholder="Kolaborasi Proyek / Diskusi / ..."
                     className={`w-full px-4 py-3 rounded-xl glass border text-white placeholder-white/20 text-sm
-                      focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]
+                      focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
                       transition-all duration-300 bg-transparent
                       ${errors.subject ? "border-red-400/50" : "border-white/10"}`}
                     {...register("subject", { required: "Subjek wajib diisi" })}
@@ -233,7 +237,7 @@ export default function Contact() {
                     rows={5}
                     placeholder="Halo Marcell, saya ingin mengajak..."
                     className={`w-full px-4 py-3 rounded-xl glass border text-white placeholder-white/20 text-sm
-                      focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]
+                      focus:outline-none focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
                       transition-all duration-300 bg-transparent resize-none
                       ${errors.message ? "border-red-400/50" : "border-white/10"}`}
                     {...register("message", { required: "Pesan wajib diisi", minLength: { value: 20, message: "Pesan minimal 20 karakter" } })}
@@ -244,14 +248,15 @@ export default function Contact() {
                 </div>
 
                 {/* Submit button */}
-                <button
+                <motion.button
                   id="contact-submit-btn"
                   type="submit"
                   disabled={formStatus === "sending" || formStatus === "success"}
+                  whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(0,212,255,0.4)" }}
+                  whileTap={{ scale: 0.98 }}
                   className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-semibold text-sm
-                    bg-gradient-to-r from-cyan-500 to-violet-600 text-white
-                    hover:shadow-[0_0_30px_rgba(0,212,255,0.3)] hover:scale-[1.01]
-                    disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100
+                    bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white
+                    disabled:opacity-60 disabled:cursor-not-allowed
                     transition-all duration-300"
                 >
                   {formStatus === "sending" ? (
@@ -275,14 +280,14 @@ export default function Contact() {
                       Kirim Pesan
                     </>
                   )}
-                </button>
+                </motion.button>
 
                 <p className="text-center text-xs text-white/30">
                   Pesan akan dikirimkan langsung ke inbox saya via email.
                 </p>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { Gamepad2, Users, Code2, Coffee, Zap, BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
+import { Gamepad2, Users, Code2, Coffee, Zap, BookOpen, Sparkles } from "lucide-react";
 
 const hobbies = [
   {
@@ -85,21 +85,6 @@ const hobbies = [
 ];
 
 export default function Hobbies() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="hobbies" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
@@ -108,7 +93,13 @@ export default function Hobbies() {
 
       <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-16 animate-on-scroll">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
+        >
           <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// HOBI & MINAT</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Di Luar{" "}
@@ -118,27 +109,31 @@ export default function Hobbies() {
           <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
             Mengenal saya lebih dalam — hal-hal yang mengisi waktu, menginspirasi kreativitas, dan membentuk cara saya berpikir sebagai seorang developer.
           </p>
-        </div>
+        </motion.div>
 
         {/* Hobbies grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {hobbies.map((hobby, idx) => (
-            <div
+            <motion.div
               key={hobby.id}
               id={`hobby-${hobby.id}`}
-              className="animate-on-scroll reveal-spring-up group glass gradient-border rounded-2xl p-6
-                hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]
-                transition-all duration-300"
-              style={{ transitionDelay: `${idx * 0.1}s` }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200, delay: idx * 0.1 }}
+              className="group glass gradient-border rounded-2xl p-6
+                hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)]
+                transition-all duration-300 cursor-default"
             >
               {/* Header */}
               <div className="flex items-center gap-4 mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${hobby.color} border ${hobby.border} flex items-center justify-center text-2xl`}>
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${hobby.color} border ${hobby.border} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}>
                   {hobby.emoji}
                 </div>
                 <div>
                   {hobby.icon}
-                  <h3 className="font-semibold text-white text-sm mt-0.5">{hobby.title}</h3>
+                  <h3 className="font-semibold text-white text-sm mt-0.5 group-hover:text-cyan-300 transition-colors">{hobby.title}</h3>
                 </div>
               </div>
 
@@ -149,7 +144,10 @@ export default function Hobbies() {
 
               {/* Fun fact */}
               <div className="glass rounded-lg p-3 mb-4 border border-white/5">
-                <p className="text-xs text-white/40 italic font-mono">{hobby.fact}</p>
+                <p className="text-xs text-white/40 italic font-mono flex items-center gap-1.5">
+                  <Sparkles size={12} className="text-cyan-400 flex-shrink-0" />
+                  {hobby.fact}
+                </p>
               </div>
 
               {/* Tags */}
@@ -160,7 +158,7 @@ export default function Hobbies() {
                   </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
