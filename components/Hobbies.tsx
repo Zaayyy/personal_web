@@ -100,7 +100,7 @@ export default function Hobbies() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// HOBI & MINAT</p>
+          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">{"// HOBI & MINAT"}</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Di Luar{" "}
             <span className="gradient-text">Kode</span>

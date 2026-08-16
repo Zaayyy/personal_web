@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Download, ChevronDown, Terminal, Code2, Zap, Sparkles } from "lucide-react";
+import { Download, ChevronDown, Terminal, Code2, Zap } from "lucide-react";
 import { FiGithub, FiInstagram } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa";
 import {
@@ -23,7 +23,6 @@ const HEADLINE_TEXTS = [
 ];
 
 function useTypewriter(texts: string[], speed = 75, pause = 2200) {
-  const [displayed, setDisplayed] = useState("");
   const [textIdx, setTextIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -39,14 +38,15 @@ function useTypewriter(texts: string[], speed = 75, pause = 2200) {
     } else if (deleting && charIdx > 0) {
       timeout = setTimeout(() => setCharIdx((c) => c - 1), speed / 2.2);
     } else if (deleting && charIdx === 0) {
-      setDeleting(false);
-      setTextIdx((i) => (i + 1) % texts.length);
+      timeout = setTimeout(() => {
+        setDeleting(false);
+        setTextIdx((i) => (i + 1) % texts.length);
+      }, speed);
     }
-    setDisplayed(current.slice(0, charIdx));
     return () => clearTimeout(timeout);
   }, [charIdx, deleting, textIdx, texts, speed, pause]);
 
-  return displayed;
+  return texts[textIdx]?.slice(0, charIdx) || "";
 }
 
 /* ─────────────── Counter hook ─────────────── */
@@ -98,6 +98,8 @@ function OrbitSystem({ paused }: { paused: boolean }) {
   const lastRef = useRef<number>(0);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
+  const animateRef = useRef<(ts: number) => void>(() => {});
+
   const animate = useCallback((ts: number) => {
     if (lastRef.current === 0) lastRef.current = ts;
     const dt = (ts - lastRef.current) / 1000;
@@ -107,13 +109,17 @@ function OrbitSystem({ paused }: { paused: boolean }) {
         prev.map((a, i) => (a + (360 / ORBIT_ICONS[i].speed) * dt) % 360)
       );
     }
-    rafRef.current = requestAnimationFrame(animate);
+    rafRef.current = requestAnimationFrame((t) => animateRef.current(t));
   }, [paused]);
 
   useEffect(() => {
-    rafRef.current = requestAnimationFrame(animate);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+    animateRef.current = animate;
   }, [animate]);
+
+  useEffect(() => {
+    rafRef.current = requestAnimationFrame((t) => animateRef.current(t));
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none">

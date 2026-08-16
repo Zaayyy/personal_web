@@ -1,21 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   SiJavascript, SiTypescript, SiPython, SiReact, SiNextdotjs,
   SiTailwindcss, SiGit, SiMysql, SiPostgresql
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
-import { Shield, Database, Globe, Brain, Cloud, Sparkles } from "lucide-react";
+import { Shield, Database, Globe, Brain, Cloud, Sparkles, Search, X } from "lucide-react";
 
 const skillGroups = [
   {
+    id: "web",
     title: "Web Development",
     icon: <Globe size={20} className="text-cyan-400" />,
     color: "from-cyan-500/20 to-cyan-600/5",
     border: "border-cyan-400/20",
     glow: "hover:shadow-[0_0_25px_rgba(0,212,255,0.2)]",
+    barColor: "from-cyan-500 to-blue-500",
     skills: [
       { name: "JavaScript", icon: <SiJavascript className="text-yellow-400" />, level: 87 },
       { name: "TypeScript", icon: <SiTypescript className="text-blue-400" />, level: 78 },
@@ -26,11 +29,13 @@ const skillGroups = [
     ],
   },
   {
+    id: "data",
     title: "Data Science & NLP",
     icon: <Brain size={20} className="text-violet-400" />,
     color: "from-violet-500/20 to-violet-600/5",
     border: "border-violet-400/20",
     glow: "hover:shadow-[0_0_25px_rgba(124,58,237,0.2)]",
+    barColor: "from-violet-500 to-purple-600",
     skills: [
       { name: "Data Crawling", icon: <Database size={16} className="text-violet-400" />, level: 80 },
       { name: "NLP Processing", icon: <Brain size={16} className="text-violet-300" />, level: 70 },
@@ -41,11 +46,13 @@ const skillGroups = [
     ],
   },
   {
+    id: "cloud",
     title: "Cloud & Security",
     icon: <Cloud size={20} className="text-emerald-400" />,
     color: "from-emerald-500/20 to-emerald-600/5",
     border: "border-emerald-400/20",
     glow: "hover:shadow-[0_0_25px_rgba(52,211,153,0.2)]",
+    barColor: "from-emerald-500 to-teal-600",
     skills: [
       { name: "AWS (CCP)", icon: <FaAws className="text-orange-400" />, level: 65 },
       { name: "Arsitektur Cloud", icon: <Cloud size={16} className="text-emerald-400" />, level: 62 },
@@ -55,6 +62,13 @@ const skillGroups = [
       { name: "Web Security", icon: <Shield size={16} className="text-emerald-400" />, level: 68 },
     ],
   },
+];
+
+const SKILL_TABS = [
+  { id: "all", label: "Semua Skill" },
+  { id: "web", label: "Web Development" },
+  { id: "data", label: "Data & NLP" },
+  { id: "cloud", label: "Cloud & Security" },
 ];
 
 function SkillBar({ level, color }: { level: number; color: string }) {
@@ -72,6 +86,22 @@ function SkillBar({ level, color }: { level: number; color: string }) {
 }
 
 export default function About() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
+
+  // Filter skills based on active tab and search query
+  const filteredGroups = skillGroups
+    .filter((group) => activeTab === "all" || group.id === activeTab)
+    .map((group) => {
+      const matchingSkills = group.skills.filter((skill) =>
+        skill.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      );
+      return { ...group, skills: matchingSkills };
+    })
+    .filter((group) => group.skills.length > 0);
+
+  const totalSkillMatches = filteredGroups.reduce((acc, g) => acc + g.skills.length, 0);
+
   return (
     <section id="about" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
       {/* Background decoration */}
@@ -87,7 +117,7 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// TENTANG SAYA</p>
+          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">{"// TENTANG SAYA"}</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Tech Stack &{" "}
             <span className="gradient-text">Keahlian</span>
@@ -149,53 +179,104 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Skill groups */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {skillGroups.map((group, gIdx) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", damping: 25, stiffness: 200, delay: gIdx * 0.15 }}
-              className={`glass gradient-border rounded-2xl p-6 transition-all duration-300 ${group.glow}`}
-            >
-              {/* Group header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${group.color} border ${group.border} flex items-center justify-center`}>
-                  {group.icon}
-                </div>
-                <h3 className="font-semibold text-white text-base">{group.title}</h3>
-              </div>
+        {/* Interactive Search & Filter Toolbar */}
+        <div className="w-full max-w-4xl mx-auto mb-10 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {SKILL_TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2 rounded-full text-xs font-mono transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? "bg-gradient-to-r from-cyan-500 to-violet-600 text-white font-semibold shadow-[0_0_20px_rgba(0,212,255,0.4)]"
+                    : "glass text-white/60 hover:text-white border border-white/10 hover:border-white/20"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
-              {/* Skills list */}
-              <div className="space-y-4">
-                {group.skills.map((skill) => (
-                  <div key={skill.name}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        <span className="text-base">{skill.icon}</span>
-                        <span className="text-sm text-white/80 font-medium">{skill.name}</span>
-                      </div>
-                      <span className="text-xs text-white/40 font-mono">{skill.level}%</span>
-                    </div>
-                    <SkillBar
-                      level={skill.level}
-                      color={
-                        gIdx === 0
-                          ? "from-cyan-500 to-blue-500"
-                          : gIdx === 1
-                          ? "from-violet-500 to-purple-600"
-                          : "from-emerald-500 to-teal-600"
-                      }
-                    />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+          {/* Search Box */}
+          <div className="relative w-full md:w-64">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Cari skill (cth: Next.js, Python)..."
+              className="w-full pl-9 pr-9 py-2 rounded-full glass border border-white/10 text-white text-xs font-mono placeholder-white/30 focus:outline-none focus:border-cyan-400/50 transition-all duration-300"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* Skill groups grid */}
+        {totalSkillMatches > 0 ? (
+          <motion.div layout className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <AnimatePresence mode="popLayout">
+              {filteredGroups.map((group, gIdx) => (
+                <motion.div
+                  layout
+                  key={group.title}
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                  whileHover={{ y: -6 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 200, delay: gIdx * 0.1 }}
+                  className={`glass gradient-border rounded-2xl p-6 transition-all duration-300 ${group.glow}`}
+                >
+                  {/* Group header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${group.color} border ${group.border} flex items-center justify-center`}>
+                        {group.icon}
+                      </div>
+                      <h3 className="font-semibold text-white text-base">{group.title}</h3>
+                    </div>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono glass border border-white/10 text-white/50">
+                      {group.skills.length} item
+                    </span>
+                  </div>
+
+                  {/* Skills list */}
+                  <div className="space-y-4">
+                    {group.skills.map((skill) => (
+                      <div key={skill.name}>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-base">{skill.icon}</span>
+                            <span className="text-sm text-white/80 font-medium">{skill.name}</span>
+                          </div>
+                          <span className="text-xs text-white/40 font-mono">{skill.level}%</span>
+                        </div>
+                        <SkillBar level={skill.level} color={group.barColor} />
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        ) : (
+          <div className="text-center py-12 glass rounded-2xl border border-white/10 max-w-xl mx-auto">
+            <p className="text-white/60 text-sm mb-2">Tidak ada skill yang cocok dengan pencarian &quot;<span className="text-cyan-400">{searchTerm}</span>&quot;</p>
+            <button
+              onClick={() => { setSearchTerm(""); setActiveTab("all"); }}
+              className="text-xs font-mono text-cyan-400 hover:underline"
+            >
+              Reset Pencarian & Filter
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

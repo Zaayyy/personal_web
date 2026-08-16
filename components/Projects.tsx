@@ -183,7 +183,7 @@ export default function Projects() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// PORTOFOLIO</p>
+          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">{"// PORTOFOLIO"}</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Proyek{" "}
             <span className="gradient-text">Unggulan</span>

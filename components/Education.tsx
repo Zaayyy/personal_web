@@ -129,7 +129,7 @@ export default function Education() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// PENDIDIKAN</p>
+          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">{"// PENDIDIKAN"}</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Pendidikan &{" "}
             <span className="gradient-text">Sertifikasi</span>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -8,8 +11,12 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CursorGlow from "@/components/CursorGlow";
+import QuickActions from "@/components/QuickActions";
+import InteractiveTerminal from "@/components/InteractiveTerminal";
 
 export default function Home() {
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
   return (
     <main className="relative min-h-screen">
       <CursorGlow />
@@ -22,6 +29,11 @@ export default function Home() {
       <Hobbies />
       <Contact />
       <Footer />
+      <QuickActions onOpenTerminal={() => setIsTerminalOpen(true)} />
+      <InteractiveTerminal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
     </main>
   );
 }

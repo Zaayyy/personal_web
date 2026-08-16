@@ -71,7 +71,7 @@ export default function Contact() {
     const mailtoUrl = `mailto:soronganmarcell@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(
       `Halo Marcell,\n\nNama: ${data.name}\nEmail: ${data.email}\n\n${data.message}`
     )}`;
-    window.location.href = mailtoUrl;
+    window.location.assign(mailtoUrl);
     setFormStatus("success");
     reset();
     setTimeout(() => setFormStatus("idle"), 4000);
@@ -92,7 +92,7 @@ export default function Contact() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">// KONTAK</p>
+          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">{"// KONTAK"}</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Mari{" "}
             <span className="gradient-text">Terhubung</span>

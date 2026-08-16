@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 
 export function useSoundFX() {
-  const [isMuted, setIsMuted] = useState(false);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("sound_muted");
-    if (saved !== null) {
-      setIsMuted(saved === "true");
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("sound_muted");
+      if (saved !== null) {
+        return saved === "true";
+      }
     }
-  }, []);
+    return false;
+  });
+  const audioCtxRef = useRef<AudioContext | null>(null);
 
   const getAudioContext = useCallback(() => {
     if (typeof window === "undefined") return null;
