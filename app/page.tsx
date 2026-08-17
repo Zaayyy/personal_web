@@ -7,6 +7,7 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Education from "@/components/Education";
 import Hobbies from "@/components/Hobbies";
+import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -27,6 +28,7 @@ export default function Home() {
       <Projects />
       <Education />
       <Hobbies />
+      <Gallery />
       <Contact />
       <Footer />
       <QuickActions onOpenTerminal={() => setIsTerminalOpen(true)} />
