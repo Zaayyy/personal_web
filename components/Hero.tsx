@@ -12,6 +12,7 @@ import {
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
 import { Shield, Database } from "lucide-react";
+import CyberClouds from "./CyberClouds";
 
 /* ─────────────── Typewriter ─────────────── */
 const HEADLINE_TEXTS = [
@@ -290,12 +291,17 @@ export default function Hero() {
     >
       {/* ── Background ── */}
       <div className="absolute inset-0 bg-[#020205] overflow-hidden">
+
+        {/* ── Cyber Clouds layer (canvas-based, parallax) ── */}
+        <CyberClouds mouseX={mousePos.x} mouseY={mousePos.y} />
+
         {/* Starfield + gradient parallax */}
         <div
           className="absolute inset-0"
           style={{
             transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)`,
             transition: "transform 0.12s ease-out",
+            zIndex: 1,
           }}
         >
           <div className="absolute inset-0 bg-hero-gradient" />
@@ -306,10 +312,11 @@ export default function Hero() {
 
         {/* Grid */}
         <div
-          className="absolute inset-0 cockpit-grid opacity-[0.18]"
+          className="absolute inset-0 cockpit-grid opacity-[0.12]"
           style={{
             transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)`,
             transition: "transform 0.1s ease-out",
+            zIndex: 2,
           }}
         />
 
@@ -319,6 +326,7 @@ export default function Hero() {
           style={{
             transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px)`,
             transition: "transform 0.18s ease-out",
+            zIndex: 2,
           }}
         >
           {/* Aurora blobs */}
@@ -331,7 +339,7 @@ export default function Hero() {
         </div>
 
         {/* Meteors */}
-        <div className="meteors-container">
+        <div className="meteors-container" style={{ zIndex: 3 }}>
           {[
             { top: "5%",  right: "15%", dur: "7s",  delay: "0.2s"  },
             { top: "18%", right: "30%", dur: "10s", delay: "3.5s"  },
@@ -345,8 +353,8 @@ export default function Hero() {
         </div>
 
         {/* Horizontal neon line accents */}
-        <div className="absolute top-[30%] left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent pointer-events-none" />
-        <div className="absolute top-[70%] left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-500/10 to-transparent pointer-events-none" />
+        <div className="absolute top-[30%] left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent pointer-events-none" style={{ zIndex: 3 }} />
+        <div className="absolute top-[70%] left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-500/10 to-transparent pointer-events-none" style={{ zIndex: 3 }} />
       </div>
 
       {/* ── Floating particles ── */}
