@@ -16,6 +16,7 @@ import QuickActions from "@/components/QuickActions";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
 import PageLoader from "@/components/PageLoader";
 import SectionReveal from "@/components/SectionReveal";
+import SectionTransitionManager from "@/components/SectionTransitionManager";
 
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
@@ -37,6 +38,9 @@ export default function Home() {
         <CursorGlow />
         <ScrollProgress />
         <Navbar />
+
+        {/* ── Per-section transition effects ── */}
+        <SectionTransitionManager />
 
         {/* Hero — no SectionReveal, it has its own entrance animations */}
         <Hero />
