@@ -45,32 +45,32 @@ export default function Home() {
         {/* Hero — no SectionReveal, it has its own entrance animations */}
         <Hero />
 
-        {/* Each section fades + slides in on scroll */}
-        <SectionReveal direction="up" delay={0}>
+        {/* Each section smoothly fades & slides in on scroll */}
+        <SectionReveal>
           <About />
         </SectionReveal>
 
-        <SectionReveal direction="up" delay={0} threshold={0.08}>
+        <SectionReveal>
           <Projects />
         </SectionReveal>
 
-        <SectionReveal direction="left" delay={0} threshold={0.08}>
+        <SectionReveal>
           <Education />
         </SectionReveal>
 
-        <SectionReveal direction="right" delay={0} threshold={0.08}>
+        <SectionReveal>
           <Hobbies />
         </SectionReveal>
 
-        <SectionReveal direction="scale" delay={0} threshold={0.06}>
+        <SectionReveal>
           <Gallery />
         </SectionReveal>
 
-        <SectionReveal direction="up" delay={0} threshold={0.08}>
+        <SectionReveal>
           <Contact />
         </SectionReveal>
 
-        <SectionReveal direction="fade" delay={0} threshold={0.05}>
+        <SectionReveal>
           <Footer />
         </SectionReveal>
 

@@ -2,36 +2,24 @@
 
 import { useEffect, useRef, useState, ReactNode } from "react";
 
-type Direction = "up" | "left" | "right" | "scale" | "fade";
-
 interface SectionRevealProps {
   children: ReactNode;
-  direction?: Direction;
   delay?: number;       // ms
   duration?: number;    // ms
   className?: string;
-  threshold?: number;   // 0–1, how much of element visible before trigger
+  threshold?: number;   // 0–1, visibility ratio
 }
 
-const INITIAL_TRANSFORMS: Record<Direction, string> = {
-  up:    "translateY(60px)",
-  left:  "translateX(-60px)",
-  right: "translateX(60px)",
-  scale: "scale(0.88)",
-  fade:  "none",
-};
-
 /**
- * Wraps any section/block and animates it into view when it enters the viewport.
- * Uses native IntersectionObserver + CSS transitions — no extra library weight.
+ * Clean & lightweight scroll reveal wrapper.
+ * Smoothly fades and slides sections into view when scrolling.
  */
 export default function SectionReveal({
   children,
-  direction = "up",
   delay = 0,
-  duration = 700,
+  duration = 600,
   className = "",
-  threshold = 0.12,
+  threshold = 0.08,
 }: SectionRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -44,7 +32,7 @@ export default function SectionReveal({
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          observer.disconnect(); // fire once
+          observer.disconnect(); // animate once
         }
       },
       { threshold }
@@ -60,9 +48,9 @@ export default function SectionReveal({
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "none" : INITIAL_TRANSFORMS[direction],
+        transform: visible ? "none" : "translateY(28px)",
         transition: visible
-          ? `opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`
+          ? `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`
           : "none",
         willChange: "opacity, transform",
       }}
