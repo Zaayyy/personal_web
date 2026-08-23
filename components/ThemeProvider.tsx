@@ -13,31 +13,31 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("portfolio_theme") as Theme | null;
-      if (saved && (saved === "dark" || saved === "light" || saved === "cyberpunk")) {
-        return saved;
-      }
-    }
-    return "dark";
-  });
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.classList.remove("dark", "light", "cyberpunk");
-    document.documentElement.classList.add(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(timer);
+    try {
+      const saved = localStorage.getItem("portfolio_theme") as Theme | null;
+      if (saved && (saved === "dark" || saved === "light" || saved === "cyberpunk")) {
+        setThemeState(saved);
+        document.documentElement.setAttribute("data-theme", saved);
+        document.documentElement.classList.remove("dark", "light", "cyberpunk");
+        document.documentElement.classList.add(saved);
+      }
+    } catch {
+      // Ignore localStorage error
+    }
+    setMounted(true);
   }, []);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem("portfolio_theme", newTheme);
+    try {
+      localStorage.setItem("portfolio_theme", newTheme);
+    } catch {
+      // Ignore localStorage error
+    }
     document.documentElement.setAttribute("data-theme", newTheme);
     document.documentElement.classList.remove("dark", "light", "cyberpunk");
     document.documentElement.classList.add(newTheme);
@@ -53,9 +53,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, cycleTheme }}>
-      <div style={{ visibility: mounted ? "visible" : "visible" }}>
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 }

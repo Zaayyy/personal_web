@@ -8,7 +8,8 @@ import {
   SiTailwindcss, SiGit, SiMysql, SiPostgresql
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
-import { Shield, Database, Globe, Brain, Cloud, Sparkles, Search, X } from "lucide-react";
+import { Shield, Database, Globe, Brain, Cloud, Sparkles, Search, X, MapPin, GraduationCap, Code2, Target } from "lucide-react";
+import { useSoundFX } from "./useSoundFX";
 
 const skillGroups = [
   {
@@ -16,16 +17,16 @@ const skillGroups = [
     title: "Web Development",
     icon: <Globe size={20} className="text-cyan-400" />,
     color: "from-cyan-500/20 to-cyan-600/5",
-    border: "border-cyan-400/20",
-    glow: "hover:shadow-[0_0_25px_rgba(0,212,255,0.2)]",
-    barColor: "from-cyan-500 to-blue-500",
+    border: "border-cyan-400/25",
+    glow: "hover:shadow-[0_0_30px_rgba(0,212,255,0.25)]",
+    barColor: "from-cyan-400 via-blue-500 to-indigo-500",
     skills: [
-      { name: "JavaScript", icon: <SiJavascript className="text-yellow-400" />, level: 87 },
-      { name: "TypeScript", icon: <SiTypescript className="text-blue-400" />, level: 78 },
-      { name: "React.js", icon: <SiReact className="text-cyan-400" />, level: 82 },
-      { name: "Next.js", icon: <SiNextdotjs className="text-white" />, level: 78 },
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-cyan-300" />, level: 88 },
-      { name: "Python", icon: <SiPython className="text-yellow-300" />, level: 80 },
+      { name: "JavaScript (ES6+)", icon: <SiJavascript className="text-yellow-400" />, level: 88, tier: "Advanced" },
+      { name: "TypeScript", icon: <SiTypescript className="text-blue-400" />, level: 82, tier: "Proficient" },
+      { name: "React.js 19", icon: <SiReact className="text-cyan-400" />, level: 85, tier: "Advanced" },
+      { name: "Next.js 16", icon: <SiNextdotjs className="text-white" />, level: 84, tier: "Advanced" },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-cyan-300" />, level: 90, tier: "Expert" },
+      { name: "Python", icon: <SiPython className="text-yellow-300" />, level: 82, tier: "Proficient" },
     ],
   },
   {
@@ -33,16 +34,16 @@ const skillGroups = [
     title: "Data Science & NLP",
     icon: <Brain size={20} className="text-violet-400" />,
     color: "from-violet-500/20 to-violet-600/5",
-    border: "border-violet-400/20",
-    glow: "hover:shadow-[0_0_25px_rgba(124,58,237,0.2)]",
-    barColor: "from-violet-500 to-purple-600",
+    border: "border-violet-400/25",
+    glow: "hover:shadow-[0_0_30px_rgba(124,58,237,0.25)]",
+    barColor: "from-violet-400 via-purple-500 to-pink-500",
     skills: [
-      { name: "Data Crawling", icon: <Database size={16} className="text-violet-400" />, level: 80 },
-      { name: "NLP Processing", icon: <Brain size={16} className="text-violet-300" />, level: 70 },
-      { name: "TF-IDF", icon: <Brain size={16} className="text-violet-300" />, level: 72 },
-      { name: "SVD/LSA", icon: <Brain size={16} className="text-purple-400" />, level: 65 },
-      { name: "MySQL", icon: <SiMysql className="text-orange-400" />, level: 78 },
-      { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-300" />, level: 65 },
+      { name: "Data Crawling & Scraping", icon: <Database size={16} className="text-violet-400" />, level: 82, tier: "Proficient" },
+      { name: "NLP & Text Processing", icon: <Brain size={16} className="text-violet-300" />, level: 75, tier: "Proficient" },
+      { name: "TF-IDF & Feature Extraction", icon: <Brain size={16} className="text-violet-300" />, level: 78, tier: "Proficient" },
+      { name: "SVD / LSA Topic Modeling", icon: <Brain size={16} className="text-purple-400" />, level: 70, tier: "Intermediate" },
+      { name: "MySQL Relational DB", icon: <SiMysql className="text-orange-400" />, level: 80, tier: "Proficient" },
+      { name: "PostgreSQL & Prisma", icon: <SiPostgresql className="text-blue-300" />, level: 72, tier: "Intermediate" },
     ],
   },
   {
@@ -50,16 +51,16 @@ const skillGroups = [
     title: "Cloud & Security",
     icon: <Cloud size={20} className="text-emerald-400" />,
     color: "from-emerald-500/20 to-emerald-600/5",
-    border: "border-emerald-400/20",
-    glow: "hover:shadow-[0_0_25px_rgba(52,211,153,0.2)]",
-    barColor: "from-emerald-500 to-teal-600",
+    border: "border-emerald-400/25",
+    glow: "hover:shadow-[0_0_30px_rgba(52,211,153,0.25)]",
+    barColor: "from-emerald-400 via-teal-500 to-cyan-500",
     skills: [
-      { name: "AWS (CCP)", icon: <FaAws className="text-orange-400" />, level: 65 },
-      { name: "Arsitektur Cloud", icon: <Cloud size={16} className="text-emerald-400" />, level: 62 },
-      { name: "OWASP Top 10", icon: <Shield size={16} className="text-red-400" />, level: 75 },
-      { name: "Mitigasi SQLi/XSS", icon: <Shield size={16} className="text-yellow-400" />, level: 72 },
-      { name: "Git & GitHub", icon: <SiGit className="text-orange-500" />, level: 85 },
-      { name: "Web Security", icon: <Shield size={16} className="text-emerald-400" />, level: 68 },
+      { name: "AWS Cloud (CCP Prep)", icon: <FaAws className="text-orange-400" />, level: 70, tier: "Intermediate" },
+      { name: "Arsitektur Cloud & Scalability", icon: <Cloud size={16} className="text-emerald-400" />, level: 68, tier: "Intermediate" },
+      { name: "OWASP Top 10 Security", icon: <Shield size={16} className="text-red-400" />, level: 78, tier: "Proficient" },
+      { name: "Mitigasi SQLi / XSS", icon: <Shield size={16} className="text-yellow-400" />, level: 76, tier: "Proficient" },
+      { name: "Git & CI/CD Workflows", icon: <SiGit className="text-orange-500" />, level: 88, tier: "Advanced" },
+      { name: "Web Security Auditing", icon: <Shield size={16} className="text-emerald-400" />, level: 72, tier: "Intermediate" },
     ],
   },
 ];
@@ -73,13 +74,13 @@ const SKILL_TABS = [
 
 function SkillBar({ level, color }: { level: number; color: string }) {
   return (
-    <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+    <div className="relative h-2 bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5">
       <motion.div
         initial={{ width: 0 }}
         whileInView={{ width: `${level}%` }}
         viewport={{ once: true }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className={`h-full rounded-full bg-gradient-to-r ${color}`}
+        className={`h-full rounded-full bg-gradient-to-r ${color} shadow-[0_0_12px_rgba(0,212,255,0.4)]`}
       />
     </div>
   );
@@ -88,6 +89,7 @@ function SkillBar({ level, color }: { level: number; color: string }) {
 export default function About() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const { playClickSound, playHoverSound } = useSoundFX();
 
   // Filter skills based on active tab and search query
   const filteredGroups = skillGroups
@@ -101,6 +103,11 @@ export default function About() {
     .filter((group) => group.skills.length > 0);
 
   const totalSkillMatches = filteredGroups.reduce((acc, g) => acc + g.skills.length, 0);
+
+  const handleTabChange = (id: string) => {
+    playClickSound();
+    setActiveTab(id);
+  };
 
   return (
     <section id="about" className="relative py-24 overflow-hidden w-full flex flex-col items-center">
@@ -117,32 +124,36 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest mb-3">{"// TENTANG SAYA"}</p>
+          <p className="font-mono text-cyan-400 text-xs tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
+            <span className="w-6 h-px bg-cyan-400/50" />
+            {"// TENTANG SAYA"}
+            <span className="w-6 h-px bg-cyan-400/50" />
+          </p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Tech Stack &{" "}
             <span className="gradient-text">Keahlian</span>
           </h2>
           <div className="section-separator" />
-          <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
-            Mahasiswa IT yang antusias membangun proyek nyata, selalu belajar teknologi terkini, dan berkomitmen menghadirkan solusi yang berdampak.
+          <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            Mahasiswa IT yang antusias membangun proyek nyata, mendalami arsitektur modern, dan berkomitmen menghadirkan solusi digital yang berkinerja tinggi.
           </p>
         </motion.div>
 
         {/* Bio card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          initial={{ opacity: 0, scale: 0.96, y: 30 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="w-full max-w-4xl mx-auto glass gradient-border rounded-2xl p-8 mb-16"
+          className="w-full max-w-4xl mx-auto bg-[#090e1a]/85 backdrop-blur-xl border border-white/12 rounded-2xl p-6 sm:p-8 mb-8 shadow-[0_15px_45px_rgba(0,0,0,0.5)]"
         >
-          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+          <div className="flex flex-col md:flex-row gap-7 items-center md:items-start">
             {/* Avatar */}
             <div className="flex-shrink-0">
               <motion.div
-                whileHover={{ scale: 1.08, rotate: 2 }}
+                whileHover={{ scale: 1.06, rotate: 2 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="w-28 h-28 rounded-full overflow-hidden border-2 border-violet-500/40 shadow-[0_0_25px_rgba(139,92,246,0.4)] relative group cursor-default"
+                className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-[0_0_30px_rgba(0,212,255,0.3)] relative group cursor-default"
               >
                 <Image
                   src="/Profile pic.jpeg"
@@ -154,43 +165,65 @@ export default function About() {
                 />
               </motion.div>
             </div>
-            <div>
-              <h3 className="text-xl font-semibold text-white mb-1">Marcellinus Alfrits Sorongan</h3>
-              <p className="text-cyan-400 font-mono text-sm mb-4 flex items-center gap-1.5">
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-white">Marcellinus Alfrits Sorongan</h3>
+                <span className="text-xs font-mono text-emerald-400 bg-emerald-400/10 border border-emerald-400/30 px-3 py-1 rounded-full w-fit mx-auto sm:mx-0">
+                  Open to Opportunities
+                </span>
+              </div>
+              <p className="text-cyan-400 font-mono text-xs sm:text-sm mb-4 flex items-center justify-center md:justify-start gap-1.5 font-medium">
                 <Sparkles size={14} /> IT Student · Web Developer · Data Enthusiast
               </p>
-              <p className="text-white/60 leading-relaxed text-sm md:text-base">
+              <p className="text-white/65 leading-relaxed text-xs sm:text-sm mb-5">
                 Saya adalah mahasiswa S-1 Sistem Informasi di Universitas Amikom Yogyakarta yang memiliki minat mendalam dalam pengembangan web modern, analitik data, dan keamanan siber. 
-                Saya percaya bahwa teknologi yang baik harus memecahkan masalah nyata — itulah mengapa setiap proyek yang saya kerjakan selalu berfokus pada dampak dan kualitas.
-                Saat ini saya aktif mempersiapkan sertifikasi AWS Cloud Practitioner, mendalami OWASP security practices, dan terus mengasah kemampuan dalam ekosistem JavaScript modern.
+                Saya percaya bahwa teknologi yang baik harus memecahkan masalah nyata — itulah mengapa setiap proyek yang saya kerjakan selalu berfokus pada dampak, kualitas kode, dan performa tinggi.
               </p>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {["Next.js", "Python", "Data Mining", "NLP", "AWS", "UI/UX"].map((tag) => (
-                  <motion.span
-                    key={tag}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className="px-3 py-1 rounded-full text-xs font-mono glass border border-white/10 text-white/70 hover:border-cyan-400/40 hover:text-cyan-300 transition-all duration-300"
-                  >
-                    {tag}
-                  </motion.span>
-                ))}
+
+              {/* Highlights mini matrix */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                <div className="bg-white/5 p-2.5 rounded-xl border border-white/8 flex flex-col gap-0.5">
+                  <span className="text-white/40 text-[10px] uppercase">Lokasi</span>
+                  <span className="text-white/90 font-medium flex items-center gap-1">
+                    <MapPin size={12} className="text-cyan-400" /> Yogyakarta
+                  </span>
+                </div>
+                <div className="bg-white/5 p-2.5 rounded-xl border border-white/8 flex flex-col gap-0.5">
+                  <span className="text-white/40 text-[10px] uppercase">Kampus</span>
+                  <span className="text-white/90 font-medium flex items-center gap-1">
+                    <GraduationCap size={12} className="text-violet-400" /> Amikom
+                  </span>
+                </div>
+                <div className="bg-white/5 p-2.5 rounded-xl border border-white/8 flex flex-col gap-0.5">
+                  <span className="text-white/40 text-[10px] uppercase">Spesialisasi</span>
+                  <span className="text-white/90 font-medium flex items-center gap-1">
+                    <Code2 size={12} className="text-emerald-400" /> Full-Stack
+                  </span>
+                </div>
+                <div className="bg-white/5 p-2.5 rounded-xl border border-white/8 flex flex-col gap-0.5">
+                  <span className="text-white/40 text-[10px] uppercase">Sertifikasi</span>
+                  <span className="text-white/90 font-medium flex items-center gap-1">
+                    <Target size={12} className="text-amber-400" /> AWS & OWASP
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </motion.div>
 
         {/* Interactive Search & Filter Toolbar */}
-        <div className="w-full max-w-4xl mx-auto mb-10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="w-full max-w-4xl mx-auto mb-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Category Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             {SKILL_TABS.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-mono transition-all duration-300 ${
+                onClick={() => handleTabChange(tab.id)}
+                onMouseEnter={playHoverSound}
+                className={`px-4 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                   activeTab === tab.id
                     ? "bg-gradient-to-r from-cyan-500 to-violet-600 text-white font-semibold shadow-[0_0_20px_rgba(0,212,255,0.4)]"
-                    : "glass text-white/60 hover:text-white border border-white/10 hover:border-white/20"
+                    : "bg-white/5 text-white/60 hover:text-white border border-white/10 hover:border-white/20"
                 }`}
               >
                 {tab.label}
@@ -199,19 +232,19 @@ export default function About() {
           </div>
 
           {/* Search Box */}
-          <div className="relative w-full md:w-64">
+          <div className="relative w-full sm:w-64">
             <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Cari skill (cth: Next.js, Python)..."
-              className="w-full pl-9 pr-9 py-2 rounded-full glass border border-white/10 text-white text-xs font-mono placeholder-white/30 focus:outline-none focus:border-cyan-400/50 transition-all duration-300"
+              className="w-full pl-9 pr-9 py-2 rounded-full bg-white/5 border border-white/10 text-white text-xs font-mono placeholder-white/30 focus:outline-none focus:border-cyan-400/50 transition-all duration-300"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white cursor-pointer"
               >
                 <X size={14} />
               </button>
@@ -232,31 +265,40 @@ export default function About() {
                   exit={{ opacity: 0, scale: 0.9, y: 20 }}
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", damping: 25, stiffness: 200, delay: gIdx * 0.1 }}
-                  className={`glass gradient-border rounded-2xl p-6 transition-all duration-300 ${group.glow}`}
+                  className={`bg-[#090e1a]/85 backdrop-blur-md border ${group.border} rounded-2xl p-6 transition-all duration-300 ${group.glow}`}
                 >
                   {/* Group header */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${group.color} border ${group.border} flex items-center justify-center`}>
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${group.color} border border-white/10 flex items-center justify-center shadow-md`}>
                         {group.icon}
                       </div>
                       <h3 className="font-semibold text-white text-base">{group.title}</h3>
                     </div>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono glass border border-white/10 text-white/50">
-                      {group.skills.length} item
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-white/5 border border-white/10 text-white/60">
+                      {group.skills.length} skills
                     </span>
                   </div>
 
                   {/* Skills list */}
                   <div className="space-y-4">
                     {group.skills.map((skill) => (
-                      <div key={skill.name}>
+                      <div key={skill.name} className="group/item">
                         <div className="flex items-center justify-between mb-1.5">
                           <div className="flex items-center gap-2">
                             <span className="text-base">{skill.icon}</span>
-                            <span className="text-sm text-white/80 font-medium">{skill.name}</span>
+                            <span className="text-xs sm:text-sm text-white/80 font-medium group-hover/item:text-white transition-colors">
+                              {skill.name}
+                            </span>
                           </div>
-                          <span className="text-xs text-white/40 font-mono">{skill.level}%</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono text-white/40 bg-white/5 px-2 py-0.5 rounded">
+                              {skill.tier}
+                            </span>
+                            <span className="text-xs text-cyan-300/80 font-mono font-semibold">
+                              {skill.level}%
+                            </span>
+                          </div>
                         </div>
                         <SkillBar level={skill.level} color={group.barColor} />
                       </div>
@@ -267,11 +309,16 @@ export default function About() {
             </AnimatePresence>
           </motion.div>
         ) : (
-          <div className="text-center py-12 glass rounded-2xl border border-white/10 max-w-xl mx-auto">
-            <p className="text-white/60 text-sm mb-2">Tidak ada skill yang cocok dengan pencarian &quot;<span className="text-cyan-400">{searchTerm}</span>&quot;</p>
+          <div className="text-center py-12 bg-white/5 rounded-2xl border border-white/10 max-w-xl mx-auto">
+            <p className="text-white/60 text-sm mb-2">
+              Tidak ada skill yang cocok dengan pencarian &quot;<span className="text-cyan-400">{searchTerm}</span>&quot;
+            </p>
             <button
-              onClick={() => { setSearchTerm(""); setActiveTab("all"); }}
-              className="text-xs font-mono text-cyan-400 hover:underline"
+              onClick={() => {
+                setSearchTerm("");
+                setActiveTab("all");
+              }}
+              className="text-xs font-mono text-cyan-400 hover:underline cursor-pointer"
             >
               Reset Pencarian & Filter
             </button>

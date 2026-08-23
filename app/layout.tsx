@@ -36,6 +36,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Marcellinus Alfrits Sorongan", url: "https://github.com/Zaayyy" }],
   creator: "Marcellinus Alfrits Sorongan",
+  metadataBase: new URL("https://github.com/Zaayyy/personal_web"),
   openGraph: {
     title: "Marcellinus Alfrits Sorongan | Web Developer & IT Student",
     description:
@@ -55,6 +56,35 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Marcellinus Alfrits Sorongan",
+  "jobTitle": "Full-Stack Web Developer & IT Student",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "Universitas Amikom Yogyakarta"
+  },
+  "url": "https://github.com/Zaayyy",
+  "sameAs": [
+    "https://github.com/Zaayyy",
+    "https://www.linkedin.com/in/marcell-sorongan-36070a299",
+    "https://www.instagram.com/aceeeelllllll"
+  ],
+  "knowsAbout": [
+    "Web Development",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Python",
+    "Data Science",
+    "NLP",
+    "Cloud Computing",
+    "AWS",
+    "OWASP Web Security"
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,12 +92,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
-        className={`${inter.variable} ${firaCode.variable} antialiased bg-[#050a15] text-white`}
+        className={`${inter.variable} ${firaCode.variable} antialiased bg-[#050a15] text-white selection:bg-cyan-500/30 selection:text-cyan-200`}
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
 }
-

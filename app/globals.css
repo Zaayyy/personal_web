@@ -929,3 +929,39 @@ html[data-theme="cyberpunk"] .glass {
   box-shadow: 0 0 25px rgba(236, 72, 153, 0.15);
 }
 
+/* Print Styles for Resume Modal */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-resume, #printable-resume * {
+    visibility: visible;
+  }
+  #printable-resume {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+  #printable-resume h1, 
+  #printable-resume h2, 
+  #printable-resume h3, 
+  #printable-resume strong {
+    color: #0f172a !important;
+  }
+  #printable-resume p, 
+  #printable-resume span, 
+  #printable-resume div {
+    color: #334155 !important;
+  }
+  #printable-resume a {
+    color: #0284c7 !important;
+    text-decoration: underline;
+  }
+}
+
+

@@ -1,18 +1,21 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 export function useSoundFX() {
-  const [isMuted, setIsMuted] = useState(() => {
-    if (typeof window !== "undefined") {
+  const [isMuted, setIsMuted] = useState(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  useEffect(() => {
+    try {
       const saved = localStorage.getItem("sound_muted");
       if (saved !== null) {
-        return saved === "true";
+        setIsMuted(saved === "true");
       }
+    } catch {
+      // Ignore localStorage errors
     }
-    return false;
-  });
-  const audioCtxRef = useRef<AudioContext | null>(null);
+  }, []);
 
   const getAudioContext = useCallback(() => {
     if (typeof window === "undefined") return null;
@@ -31,7 +34,11 @@ export function useSoundFX() {
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => {
       const next = !prev;
-      localStorage.setItem("sound_muted", String(next));
+      try {
+        localStorage.setItem("sound_muted", String(next));
+      } catch {
+        // Ignore localStorage error
+      }
       return next;
     });
   }, []);
@@ -98,12 +105,12 @@ export function useSoundFX() {
       const gain3 = ctx.createGain();
       osc3.type = "triangle";
       osc3.frequency.setValueAtTime(783.99, now + 0.15); // G5
-      gain3.gain.setValueAtTime(0.06, now + 0.15);
-      gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      gain3.gain.setValueAtTime(0.08, now + 0.15);
+      gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
       osc3.connect(gain3);
       gain3.connect(ctx.destination);
       osc3.start(now + 0.15);
-      osc3.stop(now + 0.35);
+      osc3.stop(now + 0.32);
     } catch {
       // Ignore audio context errors
     }
@@ -120,7 +127,9 @@ export function useSoundFX() {
 
       osc.type = "sine";
       osc.frequency.setValueAtTime(1200, ctx.currentTime);
-      gain.gain.setValueAtTime(0.02, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.03);
+
+      gain.gain.setValueAtTime(0.015, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.03);
 
       osc.connect(gain);
@@ -129,7 +138,7 @@ export function useSoundFX() {
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.03);
     } catch {
-      // Ignore
+      // Ignore audio context errors
     }
   }, [isMuted, getAudioContext]);
 
