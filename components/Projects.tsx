@@ -6,6 +6,7 @@ import { ExternalLink, Layers, Database, Brain, Globe, MessageSquare, Sparkles, 
 import { FiGithub } from "react-icons/fi";
 import ProjectModal, { ProjectItem } from "@/components/ProjectModal";
 import { useSoundFX } from "./useSoundFX";
+import TiltCard from "./TiltCard";
 
 const projects: ProjectItem[] = [
   {
@@ -244,19 +245,19 @@ export default function Projects() {
         <motion.div layout className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
-              <motion.div
-                layout
-                key={project.id}
-                initial={{ opacity: 0, scale: 0.92, y: 25 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.92, y: 25 }}
-                whileHover={{ y: -8, transition: { duration: 0.25 } }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                id={`project-${project.id}`}
-                onClick={() => handleCardClick(project)}
-                onMouseEnter={playHoverSound}
-                className="group bg-[#090e1a]/85 backdrop-blur-md border border-white/10 hover:border-cyan-400/40 rounded-2xl overflow-hidden cursor-pointer shadow-[0_15px_45px_rgba(0,0,0,0.5)] transition-all duration-300"
-              >
+              <TiltCard key={project.id} tiltStrength={8} glareEnabled>
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.92, y: 25 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, y: 25 }}
+                  whileHover={{ y: -8, transition: { duration: 0.25 } }}
+                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                  id={`project-${project.id}`}
+                  onClick={() => handleCardClick(project)}
+                  onMouseEnter={playHoverSound}
+                  className="group bg-[#090e1a]/85 backdrop-blur-md border border-white/10 hover:border-cyan-400/40 rounded-2xl overflow-hidden cursor-pointer shadow-[0_15px_45px_rgba(0,0,0,0.5)] transition-all duration-300"
+                >
                 {/* Card header */}
                 <div className={`relative p-6 bg-gradient-to-br ${project.gradient} border-b border-white/8`}>
                   <div className="flex items-start justify-between mb-3">
@@ -340,6 +341,7 @@ export default function Projects() {
                   </div>
                 </div>
               </motion.div>
+              </TiltCard>
             ))}
           </AnimatePresence>
         </motion.div>

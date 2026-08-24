@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Award, BookOpen, Target, CheckCircle, Clock, MapPin, ExternalLink, Sparkles, BadgeCheck } from "lucide-react";
 import { FaAws } from "react-icons/fa";
 import { useSoundFX } from "./useSoundFX";
+import AnimatedTimeline from "./AnimatedTimeline";
 
 const education = [
   {
@@ -159,8 +160,9 @@ export default function Education() {
             Pendidikan Formal & Riwayat Akademik
           </motion.h3>
 
-          <div className="flex flex-col gap-6 relative">
-            {education.map((edu, idx) => (
+          <AnimatedTimeline>
+            <div className="flex flex-col gap-6 relative">
+              {education.map((edu, idx) => (
               <motion.div
                 key={edu.institution}
                 initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30 }}
@@ -242,7 +244,8 @@ export default function Education() {
                 </div>
               </motion.div>
             ))}
-          </div>
+            </div>
+          </AnimatedTimeline>
         </div>
 
         {/* Certifications */}

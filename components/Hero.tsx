@@ -15,6 +15,8 @@ import { Shield, Database } from "lucide-react";
 import CyberClouds from "./CyberClouds";
 import ResumeModal from "./ResumeModal";
 import { useSoundFX } from "./useSoundFX";
+import TextScramble from "./TextScramble";
+import MagneticButton from "./MagneticButton";
 
 /* ─────────────── Typewriter ─────────────── */
 const HEADLINE_TEXTS = [
@@ -447,17 +449,17 @@ export default function Hero() {
               Available for Opportunities · Yogyakarta, ID
             </motion.div>
 
-            {/* Name heading */}
+            {/* Name heading with TextScramble decode effect */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
               className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-4"
             >
-              <span className="text-white">Marcellinus</span>
+              <TextScramble text="Marcellinus" className="text-white" delay={400} speed={45} />
               <br />
-              <span className="gradient-text">Alfrits</span>{" "}
-              <span className="text-white/90">Sorongan</span>
+              <TextScramble text="Alfrits" className="gradient-text" delay={900} speed={45} />{" "}
+              <TextScramble text="Sorongan" className="text-white/90" delay={1300} speed={45} />
             </motion.h1>
 
             {/* Typewriter line */}
@@ -507,20 +509,22 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.75 }}
               className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-4 mb-9"
             >
-              <motion.button
-                id="download-resume-btn"
-                onClick={handleOpenResume}
-                onMouseEnter={playHoverSound}
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0,212,255,0.5)" }}
-                whileTap={{ scale: 0.96 }}
-                className="btn-neon flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm
-                  bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white
-                  shadow-[0_0_20px_rgba(0,212,255,0.25)]
-                  transition-all duration-300 cursor-pointer"
-              >
-                <Download size={16} />
-                Lihat & Unduh CV
-              </motion.button>
+              <MagneticButton strength={0.35}>
+                <motion.button
+                  id="download-resume-btn"
+                  onClick={handleOpenResume}
+                  onMouseEnter={playHoverSound}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0,212,255,0.5)" }}
+                  whileTap={{ scale: 0.96 }}
+                  className="btn-neon flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm
+                    bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white
+                    shadow-[0_0_20px_rgba(0,212,255,0.25)]
+                    transition-all duration-300 cursor-pointer"
+                >
+                  <Download size={16} />
+                  Lihat & Unduh CV
+                </motion.button>
+              </MagneticButton>
 
               <motion.a
                 id="view-projects-btn"

@@ -17,6 +17,8 @@ import InteractiveTerminal from "@/components/InteractiveTerminal";
 import PageLoader from "@/components/PageLoader";
 import SectionReveal from "@/components/SectionReveal";
 import SectionTransitionManager from "@/components/SectionTransitionManager";
+import ParticleNetwork from "@/components/ParticleNetwork";
+import FloatingShapes from "@/components/FloatingShapes";
 
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
@@ -35,6 +37,14 @@ export default function Home() {
           transition: "opacity 0.6s ease 0.1s",
         }}
       >
+        {/* ── Interactive particle constellation background ── */}
+        <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+          <ParticleNetwork className="pointer-events-auto" />
+        </div>
+
+        {/* ── Floating geometric shapes ── */}
+        <FloatingShapes />
+
         <CursorGlow />
         <ScrollProgress />
         <Navbar />
