@@ -7,7 +7,7 @@ export default function CursorGlow() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
+  const springConfig = { damping: 30, stiffness: 250, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
@@ -24,18 +24,14 @@ export default function CursorGlow() {
   return (
     <motion.div
       className="pointer-events-none fixed inset-0 z-30 overflow-hidden hidden md:block"
-      style={{
-        left: 0,
-        top: 0,
-      }}
     >
       <motion.div
-        className="w-[450px] h-[450px] rounded-full absolute -translate-x-1/2 -translate-y-1/2 opacity-40 blur-[90px]"
+        className="w-[300px] h-[300px] rounded-full absolute -translate-x-1/2 -translate-y-1/2 opacity-20 blur-[80px]"
         style={{
           x: smoothX,
           y: smoothY,
           background:
-            "radial-gradient(circle, rgba(0,212,255,0.2) 0%, rgba(139,92,246,0.15) 50%, transparent 80%)",
+            "radial-gradient(circle, rgba(59,130,246,0.25) 0%, rgba(59,130,246,0.08) 50%, transparent 80%)",
         }}
       />
     </motion.div>

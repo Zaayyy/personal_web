@@ -18,7 +18,6 @@ import PageLoader from "@/components/PageLoader";
 import SectionReveal from "@/components/SectionReveal";
 import SectionTransitionManager from "@/components/SectionTransitionManager";
 import ParticleNetwork from "@/components/ParticleNetwork";
-import FloatingShapes from "@/components/FloatingShapes";
 
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
@@ -26,24 +25,21 @@ export default function Home() {
 
   return (
     <>
-      {/* ── Cinematic loading screen ── */}
+      {/* ── Quick loading screen ── */}
       {!loaderDone && <PageLoader onComplete={() => setLoaderDone(true)} />}
 
-      {/* ── Main content (rendered but invisible until loader finishes) ── */}
+      {/* ── Main content ── */}
       <main
         className="relative min-h-screen"
         style={{
           opacity: loaderDone ? 1 : 0,
-          transition: "opacity 0.6s ease 0.1s",
+          transition: "opacity 0.5s ease",
         }}
       >
-        {/* ── Interactive particle constellation background ── */}
-        <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+        {/* ── Subtle particle constellation background ── */}
+        <div className="fixed inset-0 z-0 pointer-events-none opacity-25">
           <ParticleNetwork className="pointer-events-auto" />
         </div>
-
-        {/* ── Floating geometric shapes ── */}
-        <FloatingShapes />
 
         <CursorGlow />
         <ScrollProgress />
@@ -52,7 +48,7 @@ export default function Home() {
         {/* ── Per-section transition effects ── */}
         <SectionTransitionManager />
 
-        {/* Hero — no SectionReveal, it has its own entrance animations */}
+        {/* Hero — has its own entrance animations */}
         <Hero />
 
         {/* Each section smoothly fades & slides in on scroll */}

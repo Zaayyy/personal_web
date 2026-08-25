@@ -99,7 +99,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${firaCode.variable} antialiased bg-[#050a15] text-white selection:bg-cyan-500/30 selection:text-cyan-200`}
+        className={`${inter.variable} ${firaCode.variable} antialiased bg-[#09090b] text-white selection:bg-blue-500/30 selection:text-blue-200`}
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>

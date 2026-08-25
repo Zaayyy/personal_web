@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon, Zap, Volume2, VolumeX, Sparkles } from "lucide-react";
-import { useTheme } from "@/components/ThemeProvider";
-import { useSoundFX } from "@/components/useSoundFX";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "#hero", label: "Home" },
@@ -19,202 +17,138 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const { theme, cycleTheme } = useTheme();
-  const { isMuted, toggleMute, playClickSound, playThemeSound, playHoverSound } = useSoundFX();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 20);
 
-      const sections = navLinks.map((l) => l.href.slice(1));
-      for (const id of sections.reverse()) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 140) {
-          setActiveSection(id);
-          break;
+      // Simple active section detection based on scroll position
+      const sections = navLinks.map(link => link.href.substring(1));
+      
+      let current = "";
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            current = section;
+          }
         }
       }
+      
+      if (current) {
+        setActiveSection(current);
+      } else if (window.scrollY === 0) {
+        setActiveSection("hero");
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (href: string) => {
-    playClickSound();
-    setMobileOpen(false);
-    const el = document.getElementById(href.slice(1));
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleThemeToggle = () => {
-    cycleTheme();
-    playThemeSound();
-  };
-
-  const handleSoundToggle = () => {
-    toggleMute();
-  };
-
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "py-3 glass border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-          : "py-5 bg-transparent"
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? "backdrop-blur-xl bg-black/60 border-b border-white/[0.06] py-3" 
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="w-full max-w-6xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo / Brand */}
-        <motion.a
-          href="#hero"
-          onClick={(e) => { e.preventDefault(); handleNavClick("#hero"); }}
-          onMouseEnter={playHoverSound}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2.5 group"
-        >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-violet-600 to-pink-500 flex items-center justify-center text-white font-bold text-sm shadow-[0_0_20px_rgba(0,212,255,0.4)] group-hover:shadow-[0_0_30px_rgba(0,212,255,0.7)] transition-all duration-300">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+        {/* Logo */}
+        <a href="#hero" className="flex items-center gap-2 group outline-none">
+          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
             M
           </div>
-          <span className="hidden sm:block text-sm font-semibold text-white/80 group-hover:text-white transition-colors duration-300 font-mono">
-            marcell<span className="text-cyan-400">.dev</span>
-          </span>
-        </motion.a>
+        </a>
 
-        {/* Desktop nav with floating Framer Motion spring pill */}
-        <ul className="hidden md:flex items-center gap-2 glass border border-white/10 px-3 py-1.5 rounded-full shadow-inner">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.href.slice(1);
-            return (
-              <li key={link.href} className="relative">
-                <a
-                  href={link.href}
-                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                  onMouseEnter={playHoverSound}
-                  className={`relative z-10 px-4 py-1.5 block text-xs font-medium tracking-wide transition-colors duration-300 ${
-                    isActive ? "text-white font-semibold" : "text-white/60 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                </a>
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-1 bg-white/5 border border-white/10 rounded-full px-2 py-1.5 backdrop-blur-md">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setActiveSection(link.href.substring(1))}
+              className={`relative px-4 py-1.5 text-xs font-medium rounded-full transition-colors outline-none ${
+                activeSection === link.href.substring(1)
+                  ? "text-white"
+                  : "text-white/50 hover:text-white"
+              }`}
+            >
+              {activeSection === link.href.substring(1) && (
+                <motion.div
+                  layoutId="activeNavPill"
+                  className="absolute inset-0 bg-white/10 border border-white/20 rounded-full -z-10"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              {link.label}
+            </a>
+          ))}
+        </nav>
 
-                {/* Animated active pill */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activePill"
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 via-violet-600/40 to-pink-500/30 border border-cyan-400/50 rounded-full shadow-[0_0_15px_rgba(0,212,255,0.3)] z-0"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-              </li>
-            );
-          })}
-        </ul>
-
-        {/* Actions: Sound, Theme Toggle & Contact CTA */}
+        {/* CTA & Mobile Toggle */}
         <div className="flex items-center gap-3">
-          {/* Sound FX Toggle Button */}
-          <motion.button
-            id="sound-toggle-btn"
-            onClick={handleSoundToggle}
-            onMouseEnter={playHoverSound}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            title={isMuted ? "Unmute Sound FX" : "Mute Sound FX"}
-            className={`w-9 h-9 rounded-full flex items-center justify-center glass border transition-all duration-300 ${
-              isMuted
-                ? "border-red-500/30 text-red-400/70 hover:text-red-400 hover:border-red-400/60"
-                : "border-cyan-400/30 text-cyan-400 hover:shadow-[0_0_15px_rgba(0,212,255,0.4)]"
-            }`}
-            aria-label="Toggle Sound"
-          >
-            {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-          </motion.button>
-
-          {/* Theme Switcher Button */}
-          <motion.button
-            id="theme-switcher-btn"
-            onClick={handleThemeToggle}
-            onMouseEnter={playHoverSound}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            title={`Current Theme: ${theme.toUpperCase()} (Click to switch)`}
-            className="w-9 h-9 rounded-full flex items-center justify-center glass border border-white/15 text-white/80 hover:text-cyan-400 hover:border-cyan-400/40 hover:shadow-[0_0_15px_rgba(0,212,255,0.4)] transition-all duration-300"
-            aria-label="Switch Theme"
-          >
-            {theme === "dark" && <Moon size={16} className="text-cyan-400" />}
-            {theme === "light" && <Sun size={16} className="text-amber-400" />}
-            {theme === "cyberpunk" && <Zap size={16} className="text-pink-400" />}
-          </motion.button>
-
-          {/* Contact CTA */}
-          <motion.a
+          <a
             href="#contact"
-            onClick={(e) => { e.preventDefault(); handleNavClick("#contact"); }}
-            onMouseEnter={playHoverSound}
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(0,212,255,0.4)" }}
-            whileTap={{ scale: 0.95 }}
-            className="hidden md:inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full text-xs font-semibold
-              bg-gradient-to-r from-cyan-500/20 via-violet-500/20 to-pink-500/20 border border-cyan-400/40 
-              text-white hover:border-cyan-400 shadow-sm
-              transition-all duration-300"
+            className="hidden sm:flex items-center bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-medium hover:bg-blue-500 transition-colors"
           >
-            <Sparkles size={13} className="text-cyan-400 animate-pulse" />
             Contact Me
-          </motion.a>
-
-          {/* Mobile hamburger */}
+          </a>
+          
           <button
-            id="mobile-menu-toggle"
-            className="ml-1 md:hidden text-white/70 hover:text-white transition-colors"
-            onClick={() => { setMobileOpen(!mobileOpen); playClickSound(); }}
-            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-white/70 hover:text-white transition-colors outline-none"
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu AnimatePresence */}
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {mobileOpen && (
+        {mobileMenuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden glass border-t border-white/10"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full left-0 right-0 bg-[#09090b] border-b border-white/[0.06] p-4 md:hidden shadow-2xl"
           >
-            <div className="px-6 py-5">
-              <ul className="flex flex-col gap-3">
-                {navLinks.map((link) => (
-                  <motion.li
-                    key={link.href}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <a
-                      href={link.href}
-                      onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                      className={`block text-sm font-medium py-2 px-3 rounded-lg transition-colors ${
-                        activeSection === link.href.slice(1)
-                          ? "bg-cyan-500/15 text-cyan-400 border border-cyan-400/30"
-                          : "text-white/70 hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveSection(link.href.substring(1));
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    activeSection === link.href.substring(1)
+                      ? "bg-white/10 text-white border border-white/10"
+                      : "text-white/50 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-2 text-center bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-medium hover:bg-blue-500 transition-colors"
+              >
+                Contact Me
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </motion.header>
   );
 }

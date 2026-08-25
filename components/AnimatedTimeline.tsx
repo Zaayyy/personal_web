@@ -17,14 +17,14 @@ interface CheckpointDotProps {
 function CheckpointDot({ progress, threshold, top }: CheckpointDotProps) {
   const scale = useTransform(progress, (v: number) => (v >= threshold ? 1.25 : 1));
   const borderColor = useTransform(progress, (v: number) =>
-    v >= threshold ? "#00d4ff" : "rgba(255, 255, 255, 0.2)"
+    v >= threshold ? "#3b82f6" : "rgba(255, 255, 255, 0.2)"
   );
   const backgroundColor = useTransform(progress, (v: number) =>
-    v >= threshold ? "rgba(0, 212, 255, 0.25)" : "#090e1a"
+    v >= threshold ? "rgba(59, 130, 246, 0.25)" : "#0a0a0f"
   );
   const boxShadow = useTransform(progress, (v: number) =>
     v >= threshold
-      ? "0 0 15px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 212, 255, 0.4)"
+      ? "0 0 12px rgba(59, 130, 246, 0.6), 0 0 24px rgba(59, 130, 246, 0.3)"
       : "none"
   );
   const innerDotOpacity = useTransform(progress, (v: number) => (v >= threshold ? 1 : 0));
@@ -42,7 +42,7 @@ function CheckpointDot({ progress, threshold, top }: CheckpointDotProps) {
       }}
     >
       <motion.div
-        className="w-[4px] h-[4px] rounded-full bg-cyan-400 shadow-[0_0_8px_#00d4ff]"
+        className="w-[4px] h-[4px] rounded-full bg-blue-500 shadow-[0_0_6px_#3b82f6]"
         style={{
           opacity: innerDotOpacity,
           scale: innerDotScale,
@@ -82,7 +82,7 @@ export default function AnimatedTimeline({ children, className = "" }: AnimatedT
 
           {/* Animated progress line */}
           <motion.div
-            className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#00d4ff] via-[#38bdf8] to-[#7c3aed] rounded-full origin-top shadow-[0_0_12px_rgba(0,212,255,0.6)]"
+            className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#3b82f6] via-[#6366f1] to-[#818cf8] rounded-full origin-top shadow-[0_0_8px_rgba(59,130,246,0.4)]"
             style={{ scaleY }}
           />
 

@@ -12,10 +12,10 @@ interface Particle {
   isCyan: boolean;
 }
 
-const PARTICLE_COUNT = 60;
-const CONNECTION_DISTANCE = 120;
+const PARTICLE_COUNT = 35;
+const CONNECTION_DISTANCE = 100;
 const CONNECTION_DISTANCE_SQ = CONNECTION_DISTANCE * CONNECTION_DISTANCE;
-const MOUSE_RADIUS = 150;
+const MOUSE_RADIUS = 120;
 const MOUSE_RADIUS_SQ = MOUSE_RADIUS * MOUSE_RADIUS;
 
 export default memo(function ParticleNetwork({
@@ -177,7 +177,7 @@ export default memo(function ParticleNetwork({
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${lineAlpha})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
@@ -195,7 +195,7 @@ export default memo(function ParticleNetwork({
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${mouseLineAlpha})`;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${mouseLineAlpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }

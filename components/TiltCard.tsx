@@ -13,7 +13,7 @@ interface TiltCardProps {
 export default function TiltCard({
   children,
   className = "",
-  tiltStrength = 10,
+  tiltStrength = 5,
   glareEnabled = true,
 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -84,7 +84,7 @@ export default function TiltCard({
             className="pointer-events-none absolute inset-0 transition-opacity duration-300 rounded-[inherit] overflow-hidden"
             style={{
               opacity: isHovered ? 1 : 0,
-              background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.05), transparent 70%)`,
+              background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.03), transparent 70%)`,
             }}
           />
         )}
