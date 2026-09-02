@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { FiGithub } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa";
-import { useSoundFX } from "./useSoundFX";
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -24,10 +23,7 @@ interface ResumeModalProps {
 }
 
 export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
-  const { playClickSound } = useSoundFX();
-
   const handlePrint = () => {
-    playClickSound();
     window.print();
   };
 
@@ -70,10 +66,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <span className="hidden sm:inline">Cetak / Unduh PDF</span>
                 </button>
                 <button
-                  onClick={() => {
-                    playClickSound();
-                    onClose();
-                  }}
+                  onClick={onClose}
                   className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                 >
                   <X size={18} />
@@ -309,10 +302,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </button>
                 <span>·</span>
                 <button
-                  onClick={() => {
-                    playClickSound();
-                    onClose();
-                  }}
+                  onClick={onClose}
                   className="text-white/70 hover:text-white transition-colors cursor-pointer"
                 >
                   Tutup

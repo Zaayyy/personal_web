@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUp, Terminal, Volume2, VolumeX, Mail, Check } from "lucide-react";
-import { useSoundFX } from "./useSoundFX";
+import { ArrowUp, Terminal, Mail, Check } from "lucide-react";
 
 interface QuickActionsProps {
   onOpenTerminal: () => void;
@@ -13,7 +12,6 @@ export default function QuickActions({ onOpenTerminal }: QuickActionsProps) {
   const [showTop, setShowTop] = useState(false);
   const [scrollPercent, setScrollPercent] = useState(0);
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const { isMuted, toggleMute, playClickSound, playHoverSound } = useSoundFX();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,76 +30,48 @@ export default function QuickActions({ onOpenTerminal }: QuickActionsProps) {
   }, []);
 
   const scrollToTop = () => {
-    playClickSound();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleCopyEmail = () => {
-    playClickSound();
     navigator.clipboard.writeText("soronganmarcell@gmail.com");
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
   // Radial progress calculations
-  const radius = 22;
+  const radius = 20;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (scrollPercent / 100) * circumference;
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3">
-      {/* Sound FX Toggle Button */}
-      <motion.button
-        id="quick-sound-toggle-btn"
-        onClick={() => {
-          toggleMute();
-          playClickSound();
-        }}
-        onMouseEnter={playHoverSound}
-        whileHover={{ scale: 1.1, boxShadow: isMuted ? "0 0 20px rgba(239,68,68,0.4)" : "0 0 20px rgba(16,185,129,0.4)" }}
-        whileTap={{ scale: 0.9 }}
-        title={isMuted ? "Unmute Sound FX" : "Mute Sound FX"}
-        className={`w-11 h-11 rounded-full glass border flex items-center justify-center shadow-lg transition-colors duration-300 group relative ${
-          isMuted ? "border-red-500/40 text-red-400" : "border-emerald-500/40 text-emerald-400"
-        }`}
-      >
-        {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-        <span className="absolute right-14 px-2.5 py-1 rounded-md text-xs font-mono bg-black/90 text-white/90 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-          {isMuted ? "Sound: OFF" : "Sound: ON"}
-        </span>
-      </motion.button>
-
+    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-2.5">
       {/* Copy Email Quick Action */}
       <motion.button
         id="quick-copy-email-btn"
         onClick={handleCopyEmail}
-        onMouseEnter={playHoverSound}
-        whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(168,85,247,0.5)" }}
-        whileTap={{ scale: 0.9 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
         title="Copy Email Address"
-        className="w-11 h-11 rounded-full glass border border-purple-400/40 text-purple-300 flex items-center justify-center shadow-lg group relative"
+        className="w-10 h-10 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md border border-white/[0.08] text-white/70 hover:text-white hover:border-white/20 flex items-center justify-center shadow-lg group relative cursor-pointer"
       >
-        {copiedEmail ? <Check size={18} className="text-emerald-400" /> : <Mail size={18} />}
-        <span className="absolute right-14 px-2.5 py-1 rounded-md text-xs font-mono bg-black/90 text-purple-300 border border-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-          {copiedEmail ? "Email Copied! 📋" : "Copy Email"}
+        {copiedEmail ? <Check size={16} className="text-emerald-400" /> : <Mail size={16} />}
+        <span className="absolute right-12 px-2.5 py-1 rounded-md text-[11px] font-mono bg-black/90 text-white/90 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-md">
+          {copiedEmail ? "Email Disalin! 📋" : "Salin Email"}
         </span>
       </motion.button>
 
       {/* CLI Terminal Floating Trigger */}
       <motion.button
         id="quick-terminal-btn"
-        onClick={() => {
-          playClickSound();
-          onOpenTerminal();
-        }}
-        onMouseEnter={playHoverSound}
-        whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(0,212,255,0.6)" }}
-        whileTap={{ scale: 0.9 }}
+        onClick={onOpenTerminal}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
         title="Open CLI Terminal"
-        className="w-12 h-12 rounded-full glass border border-cyan-400/40 text-cyan-300 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.5)] group relative"
+        className="w-10 h-10 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md border border-blue-500/30 text-blue-400 hover:border-blue-400 flex items-center justify-center shadow-lg group relative cursor-pointer"
       >
-        <Terminal size={20} className="group-hover:rotate-12 transition-transform duration-300" />
-        <span className="absolute right-14 px-2.5 py-1 rounded-md text-xs font-mono bg-black/90 text-cyan-300 border border-cyan-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+        <Terminal size={17} className="group-hover:rotate-6 transition-transform duration-200" />
+        <span className="absolute right-12 px-2.5 py-1 rounded-md text-[11px] font-mono bg-black/90 text-blue-300 border border-blue-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-md">
           CLI Terminal (Ctrl+K)
         </span>
       </motion.button>
@@ -111,41 +81,40 @@ export default function QuickActions({ onOpenTerminal }: QuickActionsProps) {
         {showTop && (
           <motion.button
             id="back-to-top-btn"
-            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            initial={{ opacity: 0, scale: 0.6, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.5, y: 20 }}
-            whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(139,92,246,0.6)" }}
-            whileTap={{ scale: 0.9 }}
+            exit={{ opacity: 0, scale: 0.6, y: 15 }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
             onClick={scrollToTop}
-            onMouseEnter={playHoverSound}
-            title={`Back to top (${scrollPercent}%)`}
-            className="w-12 h-12 rounded-full glass border border-violet-400/40 text-violet-300 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.5)] group relative"
+            title={`Kembali ke atas (${scrollPercent}%)`}
+            className="w-10 h-10 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md border border-white/[0.08] text-white/70 hover:text-blue-400 flex items-center justify-center shadow-lg group relative cursor-pointer"
           >
             {/* SVG Progress Circle Ring */}
-            <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 50 50">
+            <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 44 44">
               <circle
-                cx="25"
-                cy="25"
+                cx="22"
+                cy="22"
                 r={radius}
-                className="stroke-violet-950/40"
-                strokeWidth="3"
+                className="stroke-white/[0.06]"
+                strokeWidth="2.5"
                 fill="none"
               />
               <circle
-                cx="25"
-                cy="25"
+                cx="22"
+                cy="22"
                 r={radius}
-                className="stroke-cyan-400 transition-all duration-150 ease-out"
-                strokeWidth="3"
+                className="stroke-blue-500 transition-all duration-150 ease-out"
+                strokeWidth="2.5"
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
                 strokeLinecap="round"
                 fill="none"
               />
             </svg>
-            <ArrowUp size={20} className="group-hover:-translate-y-0.5 transition-transform duration-300 relative z-10" />
-            <span className="absolute right-14 px-2.5 py-1 rounded-md text-xs font-mono bg-black/90 text-violet-300 border border-violet-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-              Top ({scrollPercent}%)
+            <ArrowUp size={16} className="group-hover:-translate-y-0.5 transition-transform duration-200 relative z-10" />
+            <span className="absolute right-12 px-2.5 py-1 rounded-md text-[11px] font-mono bg-black/90 text-white/90 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-md">
+              Atas ({scrollPercent}%)
             </span>
           </motion.button>
         )}

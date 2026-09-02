@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Send, Mail, MapPin, CheckCircle, AlertCircle, Loader2, Copy, Check, Sparkles, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
+import { Send, Mail, MapPin, CheckCircle, AlertCircle, Loader2, Copy, Check, MessageSquare } from "lucide-react";
 import { FiGithub, FiInstagram } from "react-icons/fi";
-import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { useSoundFX } from "./useSoundFX";
+import GlowCard from "./GlowCard";
+import MagneticButton from "./MagneticButton";
 
 type FormData = {
   name: string;
@@ -21,36 +22,32 @@ const socialLinks = [
     label: "GitHub",
     handle: "@Zaayyy",
     href: "https://github.com/Zaayyy",
-    icon: <FiGithub size={20} />,
-    color: "hover:border-white/40 hover:text-white",
-    bg: "group-hover:bg-white/10",
+    icon: <FiGithub size={18} />,
+    color: "hover:text-white",
   },
   {
     id: "contact-linkedin",
     label: "LinkedIn",
     handle: "marcell-sorongan",
     href: "https://www.linkedin.com/in/marcell-sorongan-36070a299",
-    icon: <FaLinkedinIn size={20} />,
-    color: "hover:border-blue-400/50 hover:text-blue-300",
-    bg: "group-hover:bg-blue-500/10",
+    icon: <FaLinkedinIn size={18} />,
+    color: "hover:text-blue-400",
   },
   {
     id: "contact-instagram",
     label: "Instagram",
     handle: "@aceeeelllllll",
     href: "https://www.instagram.com/aceeeelllllll",
-    icon: <FiInstagram size={20} />,
-    color: "hover:border-pink-400/50 hover:text-pink-300",
-    bg: "group-hover:bg-pink-500/10",
+    icon: <FiInstagram size={18} />,
+    color: "hover:text-pink-400",
   },
   {
     id: "contact-email",
     label: "Email",
     handle: "soronganmarcell@gmail.com",
     href: "mailto:soronganmarcell@gmail.com",
-    icon: <Mail size={20} />,
-    color: "hover:border-cyan-400/50 hover:text-cyan-300",
-    bg: "group-hover:bg-cyan-500/10",
+    icon: <Mail size={18} />,
+    color: "hover:text-blue-400",
   },
 ];
 
@@ -77,7 +74,6 @@ type FormStatus = "idle" | "sending" | "success" | "error";
 export default function Contact() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [copied, setCopied] = useState(false);
-  const { playClickSound, playHoverSound } = useSoundFX();
 
   const {
     register,
@@ -88,22 +84,19 @@ export default function Contact() {
   } = useForm<FormData>();
 
   const handleCopyEmail = () => {
-    playClickSound();
     navigator.clipboard.writeText("soronganmarcell@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
   const applyPreset = (preset: typeof PRESETS[0]) => {
-    playClickSound();
     setValue("subject", preset.subject);
     setValue("message", preset.message);
   };
 
   const onSubmit = async (data: FormData) => {
-    playClickSound();
     setFormStatus("sending");
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 800));
     const mailtoUrl = `mailto:soronganmarcell@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(
       `Halo Marcell,\n\nNama: ${data.name}\nEmail: ${data.email}\n\n${data.message}`
     )}`;
@@ -115,25 +108,25 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative py-24 pb-32 overflow-hidden w-full flex flex-col items-center">
-      {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+      {/* Background ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-600/[0.04] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
 
       <div className="w-full max-w-6xl mx-auto px-6">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyan-400 text-xs tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
-            <span className="w-6 h-px bg-cyan-400/50" />
+          <p className="font-mono text-blue-400 text-xs tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
+            <span className="w-6 h-px bg-blue-400/40" />
             {"// KONTAK"}
-            <span className="w-6 h-px bg-cyan-400/50" />
+            <span className="w-6 h-px bg-blue-400/40" />
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
             Mari{" "}
             <span className="gradient-text">Terhubung</span>
           </h2>
@@ -146,51 +139,51 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left: Contact info */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
             className="lg:col-span-2 flex flex-col justify-between"
           >
             <div>
               <div className="space-y-3.5 mb-6">
                 <div className="flex items-center gap-3 text-white/80">
-                  <MapPin size={16} className="text-cyan-400 flex-shrink-0" />
+                  <MapPin size={16} className="text-blue-400 flex-shrink-0" />
                   <span className="text-sm font-medium">Yogyakarta, Indonesia 🇮🇩</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-400" />
                   <span className="text-sm font-medium">Terbuka untuk freelance & peluang karir</span>
                 </div>
               </div>
 
               {/* Quick Copy Email Box */}
-              <div className="bg-[#090e1a]/90 border border-cyan-400/30 rounded-2xl p-4 mb-6 shadow-[0_0_20px_rgba(0,212,255,0.1)]">
+              <GlowCard className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-4 mb-6 shadow-md">
                 <div className="flex items-center justify-between gap-2">
                   <div>
-                    <p className="text-[11px] font-mono text-cyan-300 font-semibold uppercase tracking-wider">Email Langsung</p>
-                    <p className="text-sm text-white font-mono truncate max-w-[200px] sm:max-w-[240px]">
+                    <p className="text-[10px] font-mono text-blue-400 font-semibold uppercase tracking-wider">Email Langsung</p>
+                    <p className="text-xs sm:text-sm text-white font-mono truncate max-w-[180px] sm:max-w-[220px]">
                       soronganmarcell@gmail.com
                     </p>
                   </div>
                   <button
                     onClick={handleCopyEmail}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-blue-600/15 text-white/80 hover:text-blue-300 border border-white/[0.08] hover:border-blue-500/30 text-xs font-mono transition-all cursor-pointer"
                   >
                     {copied ? (
                       <>
-                        <Check size={14} className="text-emerald-400" />
+                        <Check size={13} className="text-emerald-400" />
                         <span>Disalin!</span>
                       </>
                     ) : (
                       <>
-                        <Copy size={14} />
+                        <Copy size={13} />
                         <span>Salin</span>
                       </>
                     )}
                   </button>
                 </div>
-              </div>
+              </GlowCard>
 
               <p className="text-white/50 text-xs leading-relaxed mb-6">
                 Response time biasanya dalam 24 jam. Untuk urusan mendesak, kirim email atau hubungi melalui akun media sosial di bawah.
@@ -199,25 +192,23 @@ export default function Contact() {
               {/* Social links */}
               <div className="space-y-2.5">
                 {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.id}
-                    id={social.id}
-                    href={social.href}
-                    target={social.href.startsWith("mailto") ? undefined : "_blank"}
-                    rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                    onMouseEnter={playHoverSound}
-                    whileHover={{ scale: 1.02, x: 4 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`group flex items-center gap-3.5 p-3.5 rounded-xl bg-[#090e1a]/85 border border-white/10 text-white/70 transition-all duration-300 ${social.color}`}
-                  >
-                    <div className={`w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 ${social.bg}`}>
-                      {social.icon}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-xs sm:text-sm text-white/90 group-hover:text-cyan-300 transition-colors">{social.label}</p>
-                      <p className="text-[11px] opacity-60 font-mono">{social.handle}</p>
-                    </div>
-                  </motion.a>
+                  <GlowCard key={social.id} className="rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors">
+                    <a
+                      id={social.id}
+                      href={social.href}
+                      target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                      rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                      className={`group flex items-center gap-3.5 p-3 text-white/70 transition-all duration-200 ${social.color}`}
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all duration-200 group-hover:scale-105">
+                        {social.icon}
+                      </div>
+                      <div>
+                        <p className="font-medium text-xs sm:text-sm text-white/90 group-hover:text-blue-400 transition-colors">{social.label}</p>
+                        <p className="text-[10px] opacity-60 font-mono">{social.handle}</p>
+                      </div>
+                    </a>
+                  </GlowCard>
                 ))}
               </div>
             </div>
@@ -225,32 +216,31 @@ export default function Contact() {
 
           {/* Right: Contact form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-3"
           >
-            <div className="bg-[#090e1a]/90 backdrop-blur-md border border-white/12 rounded-2xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+            <GlowCard className="rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-md p-6 sm:p-8 shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-white text-lg flex items-center gap-2">
-                  <MessageSquare size={18} className="text-cyan-400" />
+                <h3 className="font-bold text-white text-base sm:text-lg flex items-center gap-2 tracking-tight">
+                  <MessageSquare size={18} className="text-blue-400" />
                   Kirim Pesan
                 </h3>
-                <span className="text-[11px] font-mono text-white/40">Direct Mail</span>
+                <span className="text-[10px] font-mono text-white/40">Direct Mail</span>
               </div>
 
               {/* Preset buttons */}
               <div className="mb-5">
-                <p className="text-[11px] font-mono text-white/50 mb-2">Preset pesan cepat (klik untuk mengisi otomatis):</p>
+                <p className="text-[10px] font-mono text-white/50 mb-2">Preset pesan cepat (klik untuk mengisi otomatis):</p>
                 <div className="flex flex-wrap gap-1.5">
                   {PRESETS.map((preset, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => applyPreset(preset)}
-                      onMouseEnter={playHoverSound}
-                      className="px-3 py-1.5 rounded-lg text-[11px] font-mono bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/40 text-white/70 hover:text-cyan-300 transition-all cursor-pointer text-left"
+                      className="px-2.5 py-1.5 rounded-lg text-[10px] font-mono bg-white/[0.03] hover:bg-blue-600/10 border border-white/[0.06] hover:border-blue-500/30 text-white/70 hover:text-blue-300 transition-all cursor-pointer text-left"
                     >
                       {preset.label}
                     </button>
@@ -269,14 +259,14 @@ export default function Contact() {
                       id="contact-name"
                       type="text"
                       placeholder="John Doe"
-                      className={`w-full px-4 py-2.5 rounded-xl bg-white/5 border text-white placeholder-white/20 text-xs sm:text-sm
-                        focus:outline-none focus:border-cyan-400/60 focus:bg-white/[0.08] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
-                        transition-all duration-300
-                        ${errors.name ? "border-red-400/60" : "border-white/10"}`}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border text-white placeholder-white/20 text-xs sm:text-sm
+                        focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_2px_rgba(59,130,246,0.15)]
+                        transition-all duration-200
+                        ${errors.name ? "border-red-400/60" : "border-white/[0.08]"}`}
                       {...register("name", { required: "Nama wajib diisi" })}
                     />
                     {errors.name && (
-                      <p className="mt-1 text-[11px] text-red-400 font-mono">{errors.name.message}</p>
+                      <p className="mt-1 text-[10px] text-red-400 font-mono">{errors.name.message}</p>
                     )}
                   </div>
                   <div>
@@ -287,17 +277,17 @@ export default function Contact() {
                       id="contact-email"
                       type="email"
                       placeholder="john@example.com"
-                      className={`w-full px-4 py-2.5 rounded-xl bg-white/5 border text-white placeholder-white/20 text-xs sm:text-sm
-                        focus:outline-none focus:border-cyan-400/60 focus:bg-white/[0.08] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
-                        transition-all duration-300
-                        ${errors.email ? "border-red-400/60" : "border-white/10"}`}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border text-white placeholder-white/20 text-xs sm:text-sm
+                        focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_2px_rgba(59,130,246,0.15)]
+                        transition-all duration-200
+                        ${errors.email ? "border-red-400/60" : "border-white/[0.08]"}`}
                       {...register("email", {
                         required: "Email wajib diisi",
                         pattern: { value: /^\S+@\S+\.\S+$/, message: "Format email tidak valid" },
                       })}
                     />
                     {errors.email && (
-                      <p className="mt-1 text-[11px] text-red-400 font-mono">{errors.email.message}</p>
+                      <p className="mt-1 text-[10px] text-red-400 font-mono">{errors.email.message}</p>
                     )}
                   </div>
                 </div>
@@ -311,14 +301,14 @@ export default function Contact() {
                     id="contact-subject"
                     type="text"
                     placeholder="Kolaborasi Proyek / Tawaran Freelance / ..."
-                    className={`w-full px-4 py-2.5 rounded-xl bg-white/5 border text-white placeholder-white/20 text-xs sm:text-sm
-                      focus:outline-none focus:border-cyan-400/60 focus:bg-white/[0.08] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
-                      transition-all duration-300
-                      ${errors.subject ? "border-red-400/60" : "border-white/10"}`}
+                    className={`w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border text-white placeholder-white/20 text-xs sm:text-sm
+                      focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_2px_rgba(59,130,246,0.15)]
+                      transition-all duration-200
+                      ${errors.subject ? "border-red-400/60" : "border-white/[0.08]"}`}
                     {...register("subject", { required: "Subjek wajib diisi" })}
                   />
                   {errors.subject && (
-                    <p className="mt-1 text-[11px] text-red-400 font-mono">{errors.subject.message}</p>
+                    <p className="mt-1 text-[10px] text-red-400 font-mono">{errors.subject.message}</p>
                   )}
                 </div>
 
@@ -331,55 +321,54 @@ export default function Contact() {
                     id="contact-message"
                     rows={4}
                     placeholder="Halo Marcell, saya ingin mengajak..."
-                    className={`w-full px-4 py-2.5 rounded-xl bg-white/5 border text-white placeholder-white/20 text-xs sm:text-sm
-                      focus:outline-none focus:border-cyan-400/60 focus:bg-white/[0.08] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.15)]
-                      transition-all duration-300 resize-none
-                      ${errors.message ? "border-red-400/60" : "border-white/10"}`}
+                    className={`w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border text-white placeholder-white/20 text-xs sm:text-sm
+                      focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] focus:shadow-[0_0_0_2px_rgba(59,130,246,0.15)]
+                      transition-all duration-200 resize-none
+                      ${errors.message ? "border-red-400/60" : "border-white/[0.08]"}`}
                     {...register("message", { required: "Pesan wajib diisi", minLength: { value: 15, message: "Pesan minimal 15 karakter" } })}
                   />
                   {errors.message && (
-                    <p className="mt-1 text-[11px] text-red-400 font-mono">{errors.message.message}</p>
+                    <p className="mt-1 text-[10px] text-red-400 font-mono">{errors.message.message}</p>
                   )}
                 </div>
 
                 {/* Submit button */}
-                <motion.button
-                  id="contact-submit-btn"
-                  type="submit"
-                  disabled={formStatus === "sending" || formStatus === "success"}
-                  onMouseEnter={playHoverSound}
-                  whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(0,212,255,0.4)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm
-                    bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white
-                    disabled:opacity-60 disabled:cursor-not-allowed
-                    shadow-[0_0_20px_rgba(0,212,255,0.25)]
-                    transition-all duration-300 cursor-pointer"
-                >
-                  {formStatus === "sending" ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" />
-                      Membuka Mail Client...
-                    </>
-                  ) : formStatus === "success" ? (
-                    <>
-                      <CheckCircle size={16} />
-                      Terkirim! Terima kasih 🎉
-                    </>
-                  ) : formStatus === "error" ? (
-                    <>
-                      <AlertCircle size={16} />
-                      Gagal — Coba lagi
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} />
-                      Kirim Pesan Sekarang
-                    </>
-                  )}
-                </motion.button>
+                <MagneticButton strength={0.15}>
+                  <button
+                    id="contact-submit-btn"
+                    type="submit"
+                    disabled={formStatus === "sending" || formStatus === "success"}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-medium text-xs sm:text-sm
+                      bg-blue-600 hover:bg-blue-500 text-white
+                      disabled:opacity-60 disabled:cursor-not-allowed
+                      shadow-[0_0_15px_rgba(59,130,246,0.3)]
+                      transition-all duration-200 cursor-pointer"
+                  >
+                    {formStatus === "sending" ? (
+                      <>
+                        <Loader2 size={15} className="animate-spin" />
+                        Membuka Mail Client...
+                      </>
+                    ) : formStatus === "success" ? (
+                      <>
+                        <CheckCircle size={15} />
+                        Terkirim! Terima kasih 🎉
+                      </>
+                    ) : formStatus === "error" ? (
+                      <>
+                        <AlertCircle size={15} />
+                        Gagal — Coba lagi
+                      </>
+                    ) : (
+                      <>
+                        <Send size={15} />
+                        Kirim Pesan Sekarang
+                      </>
+                    )}
+                  </button>
+                </MagneticButton>
               </form>
-            </div>
+            </GlowCard>
           </motion.div>
         </div>
       </div>

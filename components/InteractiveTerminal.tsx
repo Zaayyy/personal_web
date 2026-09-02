@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal as TerminalIcon, X, Minimize2, Maximize2, Sparkles, CornerDownLeft, Copy } from "lucide-react";
-import { useSoundFX } from "./useSoundFX";
 
 interface HistoryItem {
   command: string;
@@ -41,7 +40,6 @@ export default function InteractiveTerminal({ isOpen, onClose }: InteractiveTerm
 
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalEndRef = useRef<HTMLDivElement>(null);
-  const { playClickSound } = useSoundFX();
 
   // Auto focus input when opened
   useEffect(() => {
@@ -59,8 +57,6 @@ export default function InteractiveTerminal({ isOpen, onClose }: InteractiveTerm
   const handleCommand = (cmdStr: string) => {
     const trimmed = cmdStr.trim().toLowerCase();
     if (!trimmed) return;
-
-    playClickSound();
 
     // Add to raw command history for Up/Down arrow navigation
     setCmdHistory((prev) => [...prev, trimmed]);
